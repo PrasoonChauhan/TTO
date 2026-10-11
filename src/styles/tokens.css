@@ -1,0 +1,48 @@
+/* ==========================================================================
+   The Third Orbit - Design tokens (single source of truth, per PRD §2)
+   ========================================================================== */
+:root {
+  /* Colour (PRD palette) */
+  --lunar-white: #F4F4F5;   /* surface background for light content sections */
+  --void-black: #0A0A0A;    /* deep, immersive background   */
+  --obsidian: #111111;      /* primary text on light        */
+  --starlight: #FAFAFA;     /* primary text on dark         */
+  --event-horizon: #888888; /* secondary text, borders      */
+  --orbit-line: #E5E5E5;    /* hairline orbital strokes     */
+
+  /* Extension: the hero's sunlit "regolith" surface. Cooler and darker than
+     lunar-white so the landing reads as lit stone, not a blank page. */
+  --regolith: #D7D8D4;
+  --regolith-light: #E6E7E3;
+  --regolith-shadow: #C4C5C0;
+
+  /* Type */
+  --font-display: 'Archivo Variable', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'Geist Variable', -apple-system, 'SF Pro Text', system-ui, sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
+  --tracking-tighter: -0.045em;
+  --tracking-tight: -0.02em;
+  --leading-display: 0.88;
+  --leading-none: 1;
+
+  /* Fluid display scale */
+  --fs-hero: clamp(3rem, 8vw, 11.5rem);
+  --fs-display: clamp(2.75rem, 7vw, 10rem);
+  --fs-title: clamp(2.25rem, 5.6vw, 7.5rem);
+  --fs-lead: clamp(1.05rem, 1.3vw, 1.4rem);
+  --fs-body: 1rem;
+  --fs-micro: 0.72rem;
+
+  /* Space */
+  --gutter: clamp(1rem, 2.2vw, 2.25rem);
+  --nav-h: 68px;
+  --radius: 3px;
+
+  /* Motion (CSS mirrors of GSAP eases; GSAP drives all interactions) */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* Live theme channels */
+  --bg: var(--lunar-white);
+  --fg: var(--obsidian);
+}

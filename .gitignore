@@ -1,0 +1,6 @@
+node_modules
+dist
+*.local
+
+# Internal planning document, not part of the codebase
+TTO Website PRD doc.pdf

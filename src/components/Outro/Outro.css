@@ -1,0 +1,155 @@
+/* ==========================================================================
+   Final approach - the statement before the footer.
+   The section is tall; the stage sticks for the read while the type drifts.
+   ========================================================================== */
+@import '@fontsource/saira-condensed/800.css';
+
+.outro {
+  --s-bg: #0A0A0A;
+  --s-ink: #FAFAFA;
+  --type: #E9E9E4;
+  position: relative;
+  height: 210vh;
+  background: var(--s-bg);
+  color: var(--s-ink);
+}
+.outro__stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+/* ---------- Space ---------- */
+.outro__space { position: absolute; inset: 0; pointer-events: none; }
+.outro__stars { position: absolute; left: 0; top: 0; width: 1px; height: 1px; border-radius: 50%; }
+.outro__stars--near { opacity: 0.9; }
+
+/* The hero's planet, now filling the horizon. Lit from the upper left. */
+.outro__planet {
+  position: absolute;
+  left: 50%;
+  top: 72%;
+  width: max(240vw, 1900px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  overflow: hidden;
+  background: radial-gradient(circle at 38% 2%, #3a3a3a 0%, #171717 7%, #0b0b0b 18%, #050505 40%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 30px 60px -30px rgba(255, 255, 255, 0.22),
+    0 -2px 30px rgba(235, 238, 245, 0.18),
+    0 -40px 160px rgba(200, 208, 225, 0.12);
+}
+.outro__surface {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  background:
+    repeating-radial-gradient(circle at 50% 50%, transparent 0 46.6%, rgba(255, 255, 255, 0.025) 46.6% 46.7%),
+    radial-gradient(ellipse 8% 1.2% at 30% 4%, rgba(255, 255, 255, 0.08), transparent 70%),
+    radial-gradient(ellipse 12% 1% at 62% 3%, rgba(255, 255, 255, 0.05), transparent 70%);
+}
+/* Sunrise at the limb. */
+.outro__bloom {
+  position: absolute;
+  left: 18%;
+  top: 60%;
+  width: 70vw;
+  height: 30vh;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.28) 0%, rgba(220, 225, 235, 0.08) 35%, transparent 70%);
+  filter: blur(12px);
+}
+.outro__moon {
+  position: absolute;
+  left: 50%;
+  top: 34%;
+  width: clamp(10px, 1.1vw, 18px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #ffffff 0%, #d0d0d0 40%, #6a6a6a 100%);
+  box-shadow: 0 0 18px rgba(250, 250, 250, 0.45);
+}
+
+/* ---------- HUD ---------- */
+.outro__hud {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  top: calc(var(--nav-h) + 1.5rem);
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  color: rgba(250, 250, 250, 0.85);
+}
+.outro__muted { color: rgba(250, 250, 250, 0.5); }
+.outro__status { display: inline-flex; align-items: center; gap: 0.6rem; }
+.outro__pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--starlight);
+  animation: outro-pulse 2.4s ease-in-out infinite;
+}
+@keyframes outro-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(250, 250, 250, 0.5); }
+  50% { opacity: 0.5; box-shadow: 0 0 0 6px rgba(250, 250, 250, 0); }
+}
+
+/* ---------- Statement ---------- */
+.outro__content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--nav-h) var(--gutter) 6vh;
+}
+.outro__title {
+  font-family: 'Saira Condensed', 'Arial Narrow', sans-serif;
+  font-weight: 800;
+  font-size: clamp(3.4rem, min(11vw, 18vh), 13rem);
+  line-height: 0.86;
+  letter-spacing: -0.012em;
+  text-transform: uppercase;
+  color: var(--type);
+}
+.outro__line { display: block; white-space: nowrap; will-change: transform; }
+/* Staggered indents, like a typeset poster. */
+.outro__line--1 { margin-left: 16vw; }
+.outro__line--2 { margin-left: 22vw; }
+.outro__line--3 { margin-left: 13vw; }
+.outro__line--4 { margin-left: 24vw; }
+.outro__line-mask { display: inline-block; overflow: hidden; padding: 0.04em 0.02em 0.02em; vertical-align: top; }
+.outro__line-inner { display: inline-flex; align-items: center; gap: 0.12em; }
+.outro__arrow { width: 0.66em; height: auto; flex: none; }
+
+.outro__cta {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: clamp(2rem, 6vh, 3.5rem);
+  margin-left: 31vw;
+}
+.outro .mbtn { --btn-ink: var(--type); --btn-paper: var(--void-black); }
+.outro__note { color: rgba(250, 250, 250, 0.6); }
+
+@media (max-width: 900px) {
+  .outro { height: 180vh; }
+  .outro__title { font-size: clamp(2.6rem, 13.5vw, 6.5rem); }
+  .outro__line--1 { margin-left: 2vw; }
+  .outro__line--2 { margin-left: 4vw; }
+  .outro__line--3 { margin-left: 0; }
+  .outro__line--4 { margin-left: 0; }
+  .outro__cta { margin-left: 0; flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .outro__hud { flex-direction: column; gap: 0.5rem; }
+  .outro__planet { top: 78%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .outro__pulse { animation: none; }
+}

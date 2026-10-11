@@ -1,0 +1,346 @@
+/* ==========================================================================
+   In their words - founder reviews. Daylight fades to the void on entry.
+   Live channels tweened by scroll: --s-bg, --s-ink
+   ========================================================================== */
+.reviews {
+  --s-bg: #0A0A0A;
+  --s-ink: #FAFAFA;
+  --muted: color-mix(in srgb, var(--s-ink) 58%, transparent);
+  --line: color-mix(in srgb, var(--s-ink) 14%, transparent);
+  --card-gap: 1.25rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  padding: calc(var(--nav-h) + clamp(1rem, 3vh, 2rem)) 0 clamp(1.25rem, 4vh, 2.5rem);
+  background: var(--s-bg);
+  color: var(--s-ink);
+}
+
+/* ---------- Header ---------- */
+.reviews__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: clamp(1.25rem, 4vh, 2.5rem);
+  padding: 0 var(--gutter);
+}
+.reviews__label {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: clamp(0.9rem, 2.4vh, 1.5rem);
+  font-size: clamp(1.05rem, 1.3vw, 1.3rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+.reviews__index { color: var(--muted); }
+.reviews__dot {
+  width: 0.62em;
+  height: 0.62em;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #ffffff 0%, #d0d0d0 40%, #6a6a6a 100%);
+  box-shadow: 0 0 14px rgba(250, 250, 250, 0.3);
+}
+.reviews__title { font-size: clamp(2.2rem, min(4.6vw, 8.5vh), 6.5rem); }
+.reviews__meta { display: flex; flex-direction: column; align-items: flex-end; gap: 0.9rem; padding-bottom: 0.4rem; }
+.reviews__hint { color: var(--muted); text-align: right; }
+.reviews__hint--touch { display: none; }
+.reviews__progress {
+  position: relative;
+  width: clamp(8rem, 14vw, 14rem);
+  height: 1px;
+  overflow: hidden;
+  background: var(--line);
+}
+.reviews__progress-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--s-ink);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+/* ---------- Track ---------- */
+.reviews__track {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--card-gap);
+  padding: 0 var(--gutter);
+  will-change: transform;
+}
+/* Trailing space so the last card stops one gutter from the edge. */
+.reviews__track::after { content: ''; flex: 0 0 1px; margin-left: calc(var(--gutter) - var(--card-gap) - 1px); }
+
+/* ---------- Card ---------- */
+.rcard {
+  position: relative;
+  flex: 0 0 clamp(290px, 27vw, 430px);
+  height: 100%;
+  max-height: 34rem;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.1rem, 2.4vh, 1.6rem);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--s-ink) 3%, transparent);
+}
+.rcard__top { order: 0; display: flex; align-items: center; gap: 0.7rem; }
+.rcard__headline { order: 1; }
+.rcard__poster, .rcard__body-wrap { order: 2; }
+.rcard__open { order: 3; }
+.rcard__founder { order: 4; }
+
+.rcard__logo { display: flex; height: 1.3rem; color: var(--s-ink); }
+.rcard__logo svg { width: auto; height: 100%; max-width: 5.5rem; }
+.rcard__company { color: var(--muted); }
+.rcard__quote {
+  margin-left: auto;
+  height: 1.3rem;
+  font-family: var(--font-display);
+  font-size: 3.6rem;
+  font-weight: 700;
+  line-height: 0.85;
+  color: var(--muted);
+}
+
+.rcard__headline {
+  margin-top: clamp(0.9rem, 3vh, 1.75rem);
+  font-size: clamp(1.2rem, 1.55vw, 1.85rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+.rcard__body-wrap { flex: 1 1 auto; min-height: 0; margin-top: 0.9rem; overflow: hidden; }
+/* Line count is set by script so the excerpt always ends on a whole line with an ellipsis. */
+.rcard__body {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  font-size: clamp(0.9rem, 1vw, 1.02rem);
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+/* Video card */
+.rcard__poster {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin-top: 0.9rem;
+  overflow: hidden;
+  border-radius: 3px;
+  background: #000;
+}
+.rcard__poster img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); opacity: 0.85; }
+.rcard__play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--starlight);
+  color: var(--void-black);
+}
+.rcard__play svg { width: 40%; height: 40%; margin-left: 8%; }
+.rcard__duration { position: absolute; right: 0.75rem; bottom: 0.6rem; color: var(--starlight); }
+
+/* Open: a stretched button, so the whole card is one target. */
+.rcard__open {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.rcard__open::after { content: ''; position: absolute; inset: 0; border-radius: inherit; }
+.rcard__open:focus-visible { outline: none; }
+.rcard__open:focus-visible::after { outline: 1px solid var(--s-ink); outline-offset: 3px; }
+.rcard__open-reel { display: block; height: 1.25em; overflow: hidden; line-height: 1.25; }
+.rcard__open-roll { position: relative; display: block; will-change: transform; }
+.rcard__open-roll > span { display: block; }
+.rcard__open-twin { position: absolute; top: 100%; left: 0; }
+.rcard__open-tile {
+  position: relative;
+  width: 1.6rem;
+  height: 1.6rem;
+  overflow: hidden;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.rcard__open-arrows { position: absolute; inset: 0; will-change: transform; }
+.rcard__open-arrow { position: absolute; inset: 0; display: grid; place-items: center; }
+.rcard__open-arrow svg { width: 48%; height: 48%; }
+.rcard__open-arrow--twin { transform: translate(-100%, 100%); }
+
+.rcard__founder {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: clamp(0.9rem, 2.4vh, 1.4rem);
+  padding-top: clamp(0.9rem, 2.4vh, 1.4rem);
+  border-top: 1px solid var(--line);
+}
+/* Portraits sit in monochrome with the rest of the site; colour returns on focus. */
+.rcard__photo {
+  flex: none;
+  width: 2.9rem;
+  height: 2.9rem;
+  border-radius: 50%;
+  object-fit: cover;
+  filter: grayscale(1);
+}
+.rcard__who { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+.rcard__name { font-size: 0.95rem; font-weight: 600; letter-spacing: -0.012em; }
+.rcard__role { font-size: 0.8rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ==========================================================================
+   Dialog
+   ========================================================================== */
+.rdialog {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--starlight);
+}
+.rdialog[open] { display: grid; place-items: center; }
+.rdialog::backdrop { background: transparent; }
+.rdialog__scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 5, 5, 0.74);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.rdialog__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(960px, calc(100% - 2 * var(--gutter)));
+  max-height: min(86dvh, 720px);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  background: #121212;
+}
+.rdialog__content {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 14rem minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+/* Video reviews stack: player on top, a compact founder row and headline beneath. */
+.rdialog__content--video { display: flex; flex-direction: column; gap: 1.5rem; overflow: auto; }
+.rdialog__content--video .rdialog__aside { display: grid; grid-template-columns: 4.5rem 1fr; column-gap: 1rem; align-items: center; }
+.rdialog__content--video .rdialog__photo { grid-row: span 3; width: 4.5rem; height: 4.5rem; }
+.rdialog__content--video .rdialog__name { margin-top: 0; }
+.rdialog__content--video .rdialog__company,
+.rdialog__content--video .rdialog__story { grid-column: 2; margin-top: 0.6rem; justify-self: start; }
+.rdialog__video {
+  flex: none;
+  aspect-ratio: 16 / 9;
+  max-height: 56dvh;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #000;
+}
+.rdialog__video video { width: 100%; height: 100%; object-fit: contain; }
+
+.rdialog__photo { width: 7.5rem; height: 7.5rem; border-radius: 4px; object-fit: cover; }
+.rdialog__name { margin-top: 1.25rem; font-size: 1.15rem; font-weight: 600; letter-spacing: -0.015em; }
+.rdialog__role { margin-top: 0.25rem; font-size: 0.9rem; color: rgba(250, 250, 250, 0.6); }
+.rdialog__company { display: flex; align-items: center; gap: 0.6rem; margin-top: 1.25rem; color: rgba(250, 250, 250, 0.7); }
+.rdialog__logo { display: flex; height: 1.1rem; color: var(--starlight); }
+.rdialog__logo svg { width: auto; height: 100%; max-width: 5rem; }
+.rdialog__story {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid rgba(250, 250, 250, 0.3);
+  text-align: left;
+}
+.rdialog__story svg { width: 0.9em; height: 0.9em; flex: none; }
+
+.rdialog__main { display: flex; flex-direction: column; min-height: 0; }
+.rdialog__headline { font-size: clamp(1.6rem, 2.6vw, 2.6rem); line-height: 1.02; letter-spacing: -0.04em; }
+.rdialog__scroll {
+  min-height: 0;
+  margin-top: 1.5rem;
+  padding-right: 0.75rem;
+  overflow: auto;
+  font-size: 1.08rem;
+  line-height: 1.6;
+  color: rgba(250, 250, 250, 0.78);
+}
+.rdialog__scroll p + p { margin-top: 1em; }
+
+.rdialog__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem clamp(1.5rem, 4vw, 3rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.rdialog__nav {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+}
+.rdialog__nav svg { width: 44%; height: 44%; }
+.rdialog__nav--next svg { transform: rotate(45deg); }
+.rdialog__nav--prev svg { transform: rotate(-135deg); }
+.rdialog__close { margin-left: auto; padding: 0.6rem 0; color: rgba(250, 250, 250, 0.75); }
+
+/* ---------- Small screens ---------- */
+@media (max-width: 900px) {
+  .reviews { height: auto; overflow: visible; padding: clamp(5rem, 12vh, 8rem) 0 clamp(4rem, 10vh, 6rem); }
+  .reviews__head { flex-direction: column; align-items: flex-start; }
+  .reviews__meta { align-items: flex-start; }
+  .reviews__hint { text-align: left; }
+  .reviews__hint--wide { display: none; }
+  .reviews__hint--touch { display: inline; }
+  .reviews__title { font-size: clamp(2.2rem, 9vw, 3.6rem); }
+  .reviews__track {
+    flex: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: var(--gutter);
+    scrollbar-width: none;
+    padding-bottom: 0.5rem;
+  }
+  .reviews__track::-webkit-scrollbar { display: none; }
+  .rcard { flex-basis: 82vw; height: 30rem; scroll-snap-align: start; }
+  .rdialog__content { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); overflow: auto; }
+  .rdialog__aside { display: grid; grid-template-columns: 4.5rem 1fr; column-gap: 1rem; align-items: center; }
+  .rdialog__photo { grid-row: span 3; width: 4.5rem; height: 4.5rem; }
+  .rdialog__name { margin-top: 0; }
+  .rdialog__company, .rdialog__story { grid-column: 1 / -1; }
+}
