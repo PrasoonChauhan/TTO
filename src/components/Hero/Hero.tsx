@@ -3,6 +3,7 @@ import { gsap, useGSAP, EASE } from '../../lib/gsap'
 import { resolveNavTheme, registerThemeZone } from '../../lib/theme'
 import { getLenis } from '../../lib/smoothScroll'
 import { SplitLines } from '../ui/SplitLines'
+import { leadFormLink } from '../../lib/leadForm'
 import { MagneticButton } from '../ui/MagneticButton'
 import { OrbitSystem, RINGS, FLATTEN, TILT_DEG } from './OrbitSystem'
 import { hero } from '../../content/copy'
@@ -156,7 +157,9 @@ export function Hero() {
 
       // Intro leaves: lines exit upward through their masks.
       tl.to(q('.intro .line-shell'), { yPercent: -140, duration: 0.7, stagger: 0.08, ease: EASE.inOut }, T.introOut)
-        .to(q('.intro .fade-up'), { autoAlpha: 0, yPercent: -40, duration: 0.5, stagger: 0.05, ease: EASE.inOut }, T.introOut)
+        // Exit on the wrapper, not the .fade-up items: the mount reveal owns those, and sharing
+        // them made the scroll timeline record the eyebrow mid-reveal (invisible) as its start state.
+        .to(q('.intro__top'), { autoAlpha: 0, y: -24, duration: 0.6, ease: EASE.inOut }, T.introOut)
         .to(q('.hud__cue'), { opacity: 0, duration: 0.4 }, T.introOut)
         .to(q('.ring-labels'), { autoAlpha: 1, duration: 0.5 }, T.introOut + 0.6)
 
@@ -229,7 +232,7 @@ export function Hero() {
               <p className="eyebrow fade-up intro__eyebrow">{hero.intro.eyebrow}</p>
               <p className="intro__sub fade-up">{hero.intro.sub}</p>
               <div className="fade-up intro__cta">
-                <MagneticButton href="#connect" label={hero.intro.cta} />
+                <MagneticButton {...leadFormLink('intro')} label={hero.intro.cta} />
               </div>
             </div>
             <SplitLines as="h1" lines={hero.intro.headline} className="display intro__title" />
@@ -255,7 +258,7 @@ export function Hero() {
             <SplitLines lines={hero.arrival.headline} className="display arrival__title" />
             <p className="arrival__sub fade-up">{hero.arrival.sub}</p>
             <div className="fade-up arrival__cta">
-              <MagneticButton href="#connect" label={hero.arrival.cta} size="lg" />
+              <MagneticButton {...leadFormLink('start')} label={hero.arrival.cta} size="lg" />
             </div>
           </div>
         </div>

@@ -53,16 +53,21 @@ export function Help() {
         // Visual: crossfade scenes and restart the active loop.
         scenes.forEach((g, i) => {
           if (i === next) {
-            gsap.to(g, { autoAlpha: 1, duration: 0.5, ease: EASE.move, overwrite: 'auto' })
+            gsap.to(g, { autoAlpha: 1, duration: 0.5, ease: EASE.move, overwrite: true })
             if (reduced) loops[i].progress(0.98).pause()
             else loops[i].restart()
           } else {
-            gsap.to(g, { autoAlpha: 0, duration: 0.35, ease: EASE.move, overwrite: 'auto', onComplete: () => { loops[i].pause() } })
+            gsap.to(g, { autoAlpha: 0, duration: 0.35, ease: EASE.move, overwrite: true, onComplete: () => { loops[i].pause() } })
           }
         })
         // Info: the outgoing line slips up, the new one rises in.
-        if (prev > -1) gsap.to(infos[prev], { autoAlpha: 0, y: -10, duration: 0.3, ease: 'power2.in', overwrite: 'auto' })
-        gsap.fromTo(infos[next], { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.55, delay: prev > -1 ? 0.15 : 0, ease: EASE.move, overwrite: 'auto' })
+        // overwrite: true kills every earlier tween on each block, including delayed fade-ins
+        // that have not started yet; with 'auto' those survived fast hovering and stacked up.
+        infos.forEach((el, i) => {
+          if (i === next) return
+          gsap.to(el, { autoAlpha: 0, y: i === prev ? -10 : 0, duration: i === prev ? 0.3 : 0.2, ease: 'power2.in', overwrite: true })
+        })
+        gsap.fromTo(infos[next], { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.55, delay: prev > -1 ? 0.15 : 0, ease: EASE.move, overwrite: true })
       }
 
       gsap.set(scenes, { autoAlpha: 0 })

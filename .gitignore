@@ -4,3 +4,6 @@ dist
 
 # Internal planning document, not part of the codebase
 TTO Website PRD doc.pdf
+
+# Article pages are generated from content/insights/ by plugins/insightsContent.ts
+/insights/*/

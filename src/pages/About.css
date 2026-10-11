@@ -50,12 +50,8 @@
 .ab-hero__meta { display: flex; gap: 1.5rem; margin-top: 2rem; color: rgba(250, 250, 250, 0.55); }
 .ab-hero__meta span + span::before { content: '·'; margin-right: 1.5rem; }
 
-.ab-sys { grid-column: 8 / -1; grid-row: 1; width: 100%; max-height: 78vh; overflow: visible; }
-.ab-sys__ring { fill: none; stroke: rgba(250, 250, 250, 0.22); stroke-width: 1; stroke-dasharray: 1 1; vector-effect: non-scaling-stroke; }
-.ab-sys__ring--on { stroke: var(--starlight); }
-.ab-sys__planet { fill: url(#ab-planet); stroke: rgba(250, 250, 250, 0.16); stroke-width: 1; }
-.ab-sys__moon { fill: #ececec; filter: drop-shadow(0 0 6px rgba(250, 250, 250, 0.55)); }
-.ab-sys__label { fill: rgba(250, 250, 250, 0.55); font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.06em; }
+.ab-sys { grid-column: 8 / -1; grid-row: 1; width: 100%; color: var(--starlight); }
+.ab-sys .orbd { width: 100%; height: auto; max-height: 70vh; }
 
 /* ---------- 2. The name ---------- */
 .ab-name {
@@ -83,12 +79,14 @@
   border-radius: 4px;
 }
 .ab-orbit--ours { background: var(--s-ink); color: var(--s-bg); border-color: var(--s-ink); }
-.ab-orbit__mark { width: 7.5rem; height: auto; overflow: visible; }
-.ab-orbit__mark ellipse { fill: none; stroke: color-mix(in srgb, currentColor 25%, transparent); stroke-width: 1; }
-.ab-orbit__mark ellipse.is-on { stroke: currentColor; }
-.ab-orbit__planet { fill: currentColor; opacity: 0.8; }
-.ab-orbit__moon { fill: currentColor; }
-.ab-orbit__n { margin-top: 2rem; opacity: 0.6; }
+/* Card icon: full-width strip, centred system, hairline under it. */
+.ab-orbit__mark {
+  margin: -0.25rem -0.25rem 0;
+  padding: 0.75rem 0 1.25rem;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+}
+.ab-orbit__mark .orbd { display: block; width: 100%; max-width: 20rem; height: auto; margin: 0 auto; }
+.ab-orbit__n { margin-top: 1.5rem; opacity: 0.6; }
 .ab-orbit__name { margin-top: 0.6rem; font-size: clamp(1.8rem, 2.6vw, 3.2rem); }
 .ab-orbit__body { margin-top: 1rem; max-width: 34ch; font-size: 1rem; line-height: 1.5; opacity: 0.72; }
 .ab-orbit__ours { margin-top: auto; padding-top: 1.5rem; }

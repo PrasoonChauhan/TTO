@@ -3,6 +3,7 @@ import { gsap, useGSAP, EASE } from '../../lib/gsap'
 import { useSectionTheme } from '../../hooks/useSectionTheme'
 import { surfaceCrossfade } from '../../lib/surface'
 import { SplitLines } from '../ui/SplitLines'
+import { leadFormLink } from '../../lib/leadForm'
 import { MagneticButton } from '../ui/MagneticButton'
 import { processCopy as process } from '../../content/copy'
 import './Process.css'
@@ -95,7 +96,7 @@ export function Process() {
         <div className="process__aside">
           <p className="process__sub fade-up">{process.sub}</p>
           <div className="fade-up">
-            <MagneticButton href="#connect" label={process.cta} />
+            <MagneticButton {...leadFormLink('discovery')} label={process.cta} />
           </div>
         </div>
       </header>

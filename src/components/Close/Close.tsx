@@ -3,6 +3,7 @@ import { gsap, useGSAP, EASE } from '../../lib/gsap'
 import { useSectionTheme } from '../../hooks/useSectionTheme'
 import { surfaceCrossfade } from '../../lib/surface'
 import { SplitLines } from '../ui/SplitLines'
+import { leadFormLink } from '../../lib/leadForm'
 import { MagneticButton } from '../ui/MagneticButton'
 import { close } from '../../content/copy'
 import './Close.css'
@@ -189,7 +190,7 @@ export function Close() {
         <div className="close__cta-side">
           <p className="close__cta-body fade-up">{close.cta.body}</p>
           <div className="fade-up">
-            <MagneticButton href="#connect" label={close.cta.button} size="lg" />
+            <MagneticButton {...leadFormLink('talk')} label={close.cta.button} size="lg" />
           </div>
         </div>
       </div>

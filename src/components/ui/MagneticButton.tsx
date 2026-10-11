@@ -9,6 +9,8 @@ type Props = {
   size?: 'sm' | 'lg'
   className?: string
   onClick?: (e: ReactMouseEvent<HTMLAnchorElement>) => void
+  /** Opens in a new tab (WhatsApp, other sites). */
+  external?: boolean
 }
 
 /**
@@ -17,12 +19,13 @@ type Props = {
  * arrow exits toward its head and its twin enters from the opposite corner.
  * Mouse-out plays the exact reverse. Both settle where they started.
  */
-export function MagneticButton({ href, label, size = 'sm', className = '', onClick }: Props) {
+export function MagneticButton({ href, label, size = 'sm', className = '', onClick, external = false }: Props) {
   const { roll, arrows, enter, leave } = useRoll()
 
   return (
     <a
       href={href}
+      {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
       className={`mbtn mbtn--${size} ${className}`}
       onMouseEnter={enter}
       onMouseLeave={leave}

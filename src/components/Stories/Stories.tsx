@@ -4,18 +4,29 @@ import { useSectionTheme } from '../../hooks/useSectionTheme'
 import { useRoll } from '../../hooks/useRoll'
 import { Arrow } from '../ui/Arrow'
 import { storiesCopy } from '../../content/copy'
-import { stories } from './storyData'
+import { featuredWork, type Work } from '../../content/work'
 import { Story } from './Story'
 import './Stories.css'
-
-/** Home page shows four stories; the rest live behind "View all stories". */
-const HOME_COUNT = 4
 
 /**
  * Success stories. Each story is a self-playing slide deck, so the home page
  * can tell the whole case without separate story pages.
  */
-export function Stories() {
+type Props = {
+  /** Stories to show. Home passes the featured four; /work/ passes everything. */
+  items?: Work[]
+  /** 'home' adds the "View all stories" link; 'page' is the full list on /work/. */
+  variant?: 'home' | 'page'
+  /** Shows file name, home status and an edit link on every story (/work/?edit). */
+  editMode?: boolean
+}
+
+export function Stories({ items = featuredWork, variant = 'home', editMode = false }: Props) {
+  const isPage = variant === 'page'
+  const copy = isPage ? storiesCopy.page : storiesCopy
+  const WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight']
+  // Each {n} starts a sentence, so the number word is always capitalised.
+  const intro = copy.intro.replace(/\{n\}/g, WORDS[items.length] ?? String(items.length))
   const root = useRef<HTMLElement>(null)
   const all = useRoll()
   useSectionTheme(root, 'light')
@@ -33,6 +44,7 @@ export function Stories() {
         scrollTrigger: { trigger: root.current, start: 'top 75%', toggleActions: 'play none none none' },
       })
 
+      if (!q('.stories__all')[0]) return
       gsap.set(q('.stories__all-rule'), { scaleX: 0 })
       gsap.set(q('.stories__all-label .line-inner'), { yPercent: 140 })
       gsap.set(q('.stories__all-tile'), { autoAlpha: 0, scale: 0.8 })
@@ -46,26 +58,27 @@ export function Stories() {
   )
 
   return (
-    <section className="stories" id="work" ref={root} data-nav-glass aria-labelledby="stories-title">
+    <section className={isPage ? 'stories stories--page' : 'stories'} id={isPage ? 'all-work' : 'work'} ref={root} data-nav-glass aria-labelledby="stories-title">
       <div className="stories__grid">
         <aside className="stories__aside">
           <div className="stories__sticky">
             <p className="stories__label fade-up" id="stories-title">
-              <span className="eyebrow stories__index">{storiesCopy.index}</span>
+              <span className="eyebrow stories__index">{copy.index}</span>
               <span className="stories__dot" aria-hidden="true" />
-              {storiesCopy.label}
+              {copy.label}
             </p>
-            <p className="stories__intro fade-up">{storiesCopy.intro}</p>
+            <p className="stories__intro fade-up">{intro}</p>
           </div>
         </aside>
 
         <div className="stories__list">
-          {stories.slice(0, HOME_COUNT).map((s) => (
-            <Story story={s} key={s.brand} />
+          {items.map((s) => (
+            <Story story={s} key={s.slug} editMode={editMode} />
           ))}
         </div>
       </div>
 
+      {!isPage && (
       <a
         className="stories__all"
         href={storiesCopy.all.href}
@@ -97,6 +110,7 @@ export function Stories() {
           </span>
         </span>
       </a>
+      )}
     </section>
   )
 }

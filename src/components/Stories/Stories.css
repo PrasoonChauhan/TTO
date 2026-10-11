@@ -462,3 +462,27 @@
   .story__info { margin-top: 1.5rem; gap: 2rem; }
   .story__summary { max-width: 52ch; }
 }
+
+/* ---------- Edit mode (/work/?edit) ---------- */
+.story__edit {
+  grid-column: 1 / -1;
+  order: -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+  margin-bottom: 1rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px dashed var(--line);
+  border-radius: 3px;
+}
+.story__edit-badge { padding: 0.2rem 0.45rem; border-radius: 2px; background: var(--line); }
+.story__edit-badge.is-on { background: var(--obsidian); color: var(--lunar-white); }
+.story__edit-file { color: var(--muted); text-transform: none; letter-spacing: 0; }
+.story__edit-link { margin-left: auto; text-decoration: underline; text-underline-offset: 0.25em; }
+
+/* ---------- Uploaded slides ---------- */
+.slide--image img { width: 100%; height: 100%; object-fit: cover; }
+.slide--image-contain img { object-fit: contain; }
+.slide__logo-img { display: block; width: auto; height: 100%; max-width: 100%; object-fit: contain; }
+.slide__logo-text { font-family: var(--font-display); font-weight: 700; font-size: 4cqw; letter-spacing: -0.04em; white-space: nowrap; }

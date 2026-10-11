@@ -186,10 +186,10 @@
 .rcard__open-arrow svg { width: 48%; height: 48%; }
 .rcard__open-arrow--twin { transform: translate(-100%, 100%); }
 
+/* Founder strip stacks above the card-wide "open review" area, so it is its own target. */
 .rcard__founder {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
+  position: relative;
+  z-index: 2;
   margin-top: clamp(0.9rem, 2.4vh, 1.4rem);
   padding-top: clamp(0.9rem, 2.4vh, 1.4rem);
   border-top: 1px solid var(--line);
@@ -343,4 +343,38 @@
   .rdialog__photo { grid-row: span 3; width: 4.5rem; height: 4.5rem; }
   .rdialog__name { margin-top: 0; }
   .rdialog__company, .rdialog__story { grid-column: 1 / -1; }
+}
+
+/* ---------- Founder link (card + dialog) ---------- */
+.founder { display: flex; align-items: center; gap: 0.8rem; min-width: 0; }
+.founder--link { margin: -0.35rem; padding: 0.35rem; border-radius: 3px; transition: background 0.3s var(--ease-out-quart); }
+.founder--link:hover, .founder--link:focus-visible { background: color-mix(in srgb, var(--s-ink, #fafafa) 6%, transparent); }
+.founder--link:hover .rcard__name, .founder--link:focus-visible .rcard__name {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+.rcard__in {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 1.7rem;
+  height: 1.7rem;
+  margin-left: auto;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px var(--line);
+  opacity: 0.55;
+  transition: opacity 0.3s var(--ease-out-quart);
+}
+.rcard__in svg { width: 50%; height: 50%; }
+.founder--link:hover .rcard__in, .founder--link:focus-visible .rcard__in { opacity: 1; }
+.founder--link:hover .rcard__photo { filter: grayscale(0); }
+/* Dialog: photo, name and role form one LinkedIn link without changing the layout. */
+.rdialog__person { display: contents; }
+.rdialog__person .rdialog__name, .rdialog__person .rdialog__role, .rdialog__in { display: block; }
+.rdialog__in { margin-top: 0.6rem; color: rgba(250, 250, 250, 0.6); transition: color 0.3s var(--ease-out-quart); }
+.rdialog__person:hover .rdialog__name, .rdialog__person:focus-visible .rdialog__name { text-decoration: underline; text-underline-offset: 0.2em; }
+.rdialog__person:hover .rdialog__in, .rdialog__person:focus-visible .rdialog__in { color: var(--starlight); }
+@media (max-width: 900px) {
+  .rdialog__in { grid-column: 2; margin-top: 0.3rem; }
 }

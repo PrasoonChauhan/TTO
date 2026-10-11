@@ -2,13 +2,16 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { gsap, EASE } from '../../lib/gsap'
 import { getLenis } from '../../lib/smoothScroll'
 import { brandList } from '../Brands/logos'
-import { stories } from '../Stories/storyData'
+import { workByBrand, storyHref } from '../../content/work'
 import { Arrow } from '../ui/Arrow'
 import type { Review } from './reviewData'
 
 const markFor = (company: string) => brandList.find((b) => b.name === company)?.mark
-const storyAnchor = (company: string) =>
-  stories.some((s) => s.brand === company) ? `#story-${company.toLowerCase().replace(/[^a-z0-9]+/g, '-')}` : null
+/** Link to the founder's story: on home if featured there, otherwise on /work/. */
+const storyAnchor = (company: string) => {
+  const w = workByBrand(company)
+  return w ? storyHref(w) : null
+}
 
 type Props = {
   reviews: Review[]
@@ -106,8 +109,10 @@ export function ReviewDialog({ reviews, index, onIndex }: Props) {
   const toStory = () => {
     if (!anchor) return
     close(() => {
-      const el = document.querySelector<HTMLElement>(anchor)
+      const url = new URL(anchor, window.location.href)
+      const el = url.pathname === window.location.pathname ? document.querySelector<HTMLElement>(url.hash) : null
       if (el) getLenis()?.scrollTo(el, { offset: -100, duration: 2 })
+      else window.location.href = anchor
     })
   }
 
@@ -124,9 +129,27 @@ export function ReviewDialog({ reviews, index, onIndex }: Props) {
             )}
 
             <aside className="rdialog__aside">
-              <img className="rdialog__photo" src={review.founder.photo} alt={review.founder.name} width={128} height={128} />
-              <p className="rdialog__name">{review.founder.name}</p>
-              <p className="rdialog__role">{review.founder.role}</p>
+              {review.founder.linkedin ? (
+                // display: contents keeps the existing layout; photo and name become one LinkedIn link.
+                <a
+                  className="rdialog__person"
+                  href={review.founder.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${review.founder.name} on LinkedIn`}
+                >
+                  <img className="rdialog__photo" src={review.founder.photo} alt="" width={128} height={128} />
+                  <span className="rdialog__name">{review.founder.name}</span>
+                  <span className="rdialog__role">{review.founder.role}</span>
+                  <span className="eyebrow rdialog__in">LinkedIn ↗</span>
+                </a>
+              ) : (
+                <>
+                  <img className="rdialog__photo" src={review.founder.photo} alt={review.founder.name} width={128} height={128} />
+                  <p className="rdialog__name">{review.founder.name}</p>
+                  <p className="rdialog__role">{review.founder.role}</p>
+                </>
+              )}
               <p className="rdialog__company">
                 <span className="rdialog__logo" aria-hidden="true">{markFor(review.founder.company)}</span>
                 <span className="eyebrow">{review.founder.company}</span>

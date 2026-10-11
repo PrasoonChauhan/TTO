@@ -1,12 +1,48 @@
 import { brandList } from '../Brands/logos'
 import { Arrow } from '../ui/Arrow'
 import { useRoll } from '../../hooks/useRoll'
-import type { Review } from './reviewData'
+import type { Founder, Review } from './reviewData'
+import { ICONS } from '../Footer/brandIcons'
 
 const markFor = (company: string) => brandList.find((b) => b.name === company)?.mark
 
 /** The whole review flows on the card and is trimmed to fit; the dialog shows it in full. */
 const excerpt = (body: string) => body.replace(/\n\n/g, ' ')
+
+/** Photo, name and role. A LinkedIn link when the founder has a profile. */
+export function FounderLink({ founder }: { founder: Founder }) {
+  const variant = 'card'
+  const inner = (
+    <>
+      <img className="rcard__photo" src={founder.photo} alt="" loading="lazy" width={128} height={128} />
+      <span className="rcard__who">
+        <span className="rcard__name">{founder.name}</span>
+        <span className="rcard__role">
+          {founder.role}, {founder.company}
+        </span>
+      </span>
+      {founder.linkedin && (
+        <span className="rcard__in" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d={ICONS.linkedin} />
+          </svg>
+        </span>
+      )}
+    </>
+  )
+  if (!founder.linkedin) return <div className={`founder founder--${variant}`}>{inner}</div>
+  return (
+    <a
+      className={`founder founder--${variant} founder--link`}
+      href={founder.linkedin}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${founder.name}, ${founder.role} at ${founder.company}, on LinkedIn`}
+    >
+      {inner}
+    </a>
+  )
+}
 
 type Props = { review: Review; index: number; onOpen: (index: number) => void }
 
@@ -78,14 +114,9 @@ export function ReviewCard({ review, index, onOpen }: Props) {
         </span>
       </button>
 
+      {/* Founder strip: sits above the card's open-review area and links to LinkedIn. */}
       <footer className="rcard__founder">
-        <img className="rcard__photo" src={founder.photo} alt="" loading="lazy" width={128} height={128} />
-        <span className="rcard__who">
-          <span className="rcard__name">{founder.name}</span>
-          <span className="rcard__role">
-            {founder.role}, {founder.company}
-          </span>
-        </span>
+        <FounderLink founder={founder} />
       </footer>
     </article>
   )

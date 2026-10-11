@@ -9,16 +9,24 @@
 /** Single source for the contact address. Every mailto on the site uses this. */
 export const CONTACT_EMAIL = 'hello@thethirdorbit.co'
 
+/** WhatsApp number (international format, digits only) and the message pre-typed when someone taps Connect. */
+export const WHATSAPP_NUMBER = '917678598664'
+export const WHATSAPP_MESSAGE =
+  'Hi The Third Orbit, I just visited your website and would like to connect. I am keen to learn how you could help my startup scale.'
+export const whatsappHref = (message = WHATSAPP_MESSAGE) =>
+  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
+
 export const nav = {
   links: [
     // Root-relative so the same links work from every page.
     { label: 'About', href: '/about/' },
-    { label: 'Work', href: '/#work' },
+    { label: 'Work', href: '/work/' },
     { label: 'Services', href: '/#services' },
     { label: 'Process', href: '/#process' },
-    { label: 'Insight', href: '/#insight' },
+    { label: 'Insight', href: '/insights/' },
   ],
-  cta: { label: 'Connect', href: '/#connect' },
+  /** Opens WhatsApp with the pre-typed message, in a new tab. */
+  cta: { label: 'Connect', href: whatsappHref(), external: true },
 }
 
 export const hero = {
@@ -130,8 +138,20 @@ export const close = {
 export const storiesCopy = {
   index: '(05)',
   label: 'Success stories',
-  intro: 'Four founders. Four gaps closed.',
-  all: { label: 'View all stories', href: '#stories' },
+  /** {n} is replaced with the number of featured stories, in words. */
+  intro: '{n} founders. {n} gaps closed.',
+  all: { label: 'View all stories', href: '/work/' },
+  /** The full list on /work/. */
+  page: {
+    index: '(All work)',
+    label: 'Every story',
+    intro: 'Every founder we have taken into their third orbit, and the gap we closed.',
+  },
+  pageHero: {
+    eyebrow: '(Work)',
+    title: ['Every gap,', 'closed in public.'],
+    sub: 'Strategy, brand and technology work for startups ready to scale. Every story plays as a short deck; use the arrows to read at your own pace.',
+  },
 }
 
 export const reviewsCopy = {
@@ -291,9 +311,10 @@ export const outro = {
 export const footer = {
   links: [
     { label: 'About', href: '/about/' },
-    { label: 'Work', href: '/#work' },
+    { label: 'Work', href: '/work/' },
     { label: 'Services', href: '/#services' },
     { label: 'Process', href: '/#process' },
+    { label: 'Insights', href: '/insights/' },
     { label: 'Questions', href: '/#faq' },
     { label: 'Start a project', href: '/#connect' },
   ],
@@ -302,6 +323,7 @@ export const footer = {
   socials: [
     { label: 'LinkedIn', href: 'https://www.linkedin.com/company/thethirdorbit', icon: 'linkedin' },
     { label: 'Instagram', href: 'https://www.instagram.com/thethirdorbit.co', icon: 'instagram' },
+    { label: 'WhatsApp', href: `https://wa.me/${WHATSAPP_NUMBER}`, icon: 'whatsapp' },
   ],
   ai: {
     label: 'Ask AI about The Third Orbit',
@@ -363,5 +385,61 @@ export const about = {
       { v: '6', l: 'Disciplines, one team' },
       { v: '5', l: 'Stages in every engagement' },
     ],
+  },
+}
+
+export const insightsCopy = {
+  hero: {
+    eyebrow: '(Insights)',
+    title: ['Field notes from', 'the third orbit.'],
+    sub: 'Thinking on strategy, brand, growth and technology for founders between traction and scale.',
+  },
+}
+
+/**
+ * Lead form ("Book an intro call", "Start a project", "Let's talk how", "Book a discovery call").
+ * Submissions go to a Google Apps Script web app that adds a row to a Google Sheet
+ * and emails CONTACT_EMAIL. Setup: google-apps-script/README.md.
+ */
+export const LEAD_FORM_ENDPOINT = ''
+
+export const leadForm = {
+  eyebrow: '(Start a conversation)',
+  /** Title per button. Keys are the `source` passed when the form opens. */
+  titles: {
+    intro: 'Book an intro call',
+    start: 'Start a project',
+    talk: 'Let’s talk how',
+    discovery: 'Book a discovery call',
+  } as Record<string, string>,
+  sub: 'Five quick details and we will call you at a time that suits you. No pitch deck needed.',
+  fields: {
+    name: { label: 'Your name', placeholder: 'Full name' },
+    company: { label: 'Company or business', placeholder: 'Company name' },
+    website: { label: 'Website', placeholder: 'yourcompany.com', hint: 'If you have one' },
+    phone: { label: 'Phone', placeholder: '+91 98765 43210', hint: 'With country code. WhatsApp works too.' },
+    time: { label: 'Best time to call', hint: 'India time (IST)' },
+  },
+  times: ['Morning, 9 am - 12 pm', 'Afternoon, 12 - 4 pm', 'Evening, 4 - 7 pm', 'Anytime'],
+  submit: 'Send',
+  sending: 'Sending',
+  privacy: 'We only use these details to get back to you.',
+  success: {
+    title: 'Signal received.',
+    body: 'Thanks, {name}. We will reach out {when}. If it is urgent, message us on WhatsApp.',
+    whatsapp: 'Message on WhatsApp',
+    close: 'Back to the site',
+  },
+  /** Shown while the form is not yet connected to the Google Sheet (LEAD_FORM_ENDPOINT empty). */
+  manual: {
+    title: 'Almost there.',
+    body: 'Send these details to us in one tap, and we will call you at your preferred time:',
+  },
+  error: {
+    title: 'That did not go through.',
+    body: 'Your details are safe on this screen. Send them in one tap instead:',
+    whatsapp: 'Send on WhatsApp',
+    email: 'Send by email',
+    retry: 'Try again',
   },
 }

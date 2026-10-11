@@ -1,8 +1,8 @@
 import { useRef, type CSSProperties } from 'react'
 import { gsap, ScrollTrigger, useGSAP, EASE } from '../../lib/gsap'
 import { Arrow } from '../ui/Arrow'
-import { Slides, SLIDE_TITLES } from './Slides'
-import type { Story as StoryData } from './storyData'
+import { Slides } from './Slides'
+import { slideCaption, storyId, featuredWork, REPO_EDIT_BASE, type Work } from '../../content/work'
 
 /** Seconds each slide holds while playing. The first step is quicker so hover feels responsive. */
 const HOLD = 2.8
@@ -11,7 +11,8 @@ const WIPE = { duration: 0.85, ease: 'power3.inOut' }
 
 const format = (v: number, decimals = 0) => v.toFixed(decimals)
 
-export function Story({ story }: { story: StoryData }) {
+export function Story({ story, editMode = false }: { story: Work; editMode?: boolean }) {
+  const captions = story.slides.map(slideCaption)
   const root = useRef<HTMLElement>(null)
 
   useGSAP(
@@ -47,7 +48,7 @@ export function Story({ story }: { story: StoryData }) {
         const prev = slides[index]
         const next = slides[i]
         index = i
-        caption.textContent = SLIDE_TITLES[i]
+        caption.textContent = captions[i]
         gsap.set(prev, { zIndex: 1 })
         gsap.set(next, {
           autoAlpha: 1,
@@ -88,7 +89,7 @@ export function Story({ story }: { story: StoryData }) {
         timer?.kill()
         timer = null
         index = 0
-        caption.textContent = SLIDE_TITLES[0]
+        caption.textContent = captions[0]
         slides.forEach((s, k) => gsap.set(s, { autoAlpha: k === 0 ? 1 : 0, zIndex: k === 0 ? 1 : 0, clipPath: 'inset(0% 0% 0% 0%)' }))
         settle()
         paintBars(false)
@@ -190,10 +191,11 @@ export function Story({ story }: { story: StoryData }) {
     { scope: root },
   )
 
-  const { gapClosed: g } = story
+  const g = story.gap
+  const homeRank = featuredWork.indexOf(story)
 
   return (
-    <article className="story" id={`story-${story.brand.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} ref={root} style={{ '--bar': story.palette.ink, '--bar-bg': story.palette.bg } as CSSProperties}>
+    <article className="story" id={storyId(story)} ref={root} style={{ '--bar': story.palette.ink, '--bar-bg': story.palette.bg } as CSSProperties}>
       <div
         className="story__frame"
         tabIndex={0}
@@ -206,15 +208,15 @@ export function Story({ story }: { story: StoryData }) {
         </div>
 
         <div className="story__bars">
-          {SLIDE_TITLES.map((t) => (
-            <button className="story__bar" key={t} aria-label={`Show slide: ${t}`}>
+          {captions.map((t, i) => (
+            <button className="story__bar" key={i} aria-label={`Show slide ${i + 1}: ${t}`}>
               <span className="story__bar-fill" />
             </button>
           ))}
         </div>
 
         <div className="story__caption">
-          <span className="eyebrow story__caption-text">{SLIDE_TITLES[0]}</span>
+          <span className="eyebrow story__caption-text">{captions[0]}</span>
           <span className="eyebrow story__hint">(Hover to play)</span>
         </div>
 
@@ -229,6 +231,18 @@ export function Story({ story }: { story: StoryData }) {
 
         <div className="story__veil" aria-hidden="true" />
       </div>
+
+      {editMode && (
+        <div className="story__edit">
+          <span className={`eyebrow story__edit-badge${homeRank > -1 ? ' is-on' : ''}`}>
+            {homeRank > -1 ? `Featured on home · #${homeRank + 1}` : 'Not on home'}
+          </span>
+          <span className="eyebrow story__edit-file">{story.file}</span>
+          <a className="eyebrow story__edit-link" href={REPO_EDIT_BASE + story.file} target="_blank" rel="noopener noreferrer">
+            Edit file ↗
+          </a>
+        </div>
+      )}
 
       {/* Spans exactly the frame height: story at the top, numbers on the frame's bottom edge. */}
       <div className="story__info">

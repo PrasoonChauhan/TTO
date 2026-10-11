@@ -57,7 +57,7 @@
 :root:has(.nav-overlay[data-open="true"]) .nav__logo--light { opacity: 1; }
 
 /* Centre cluster */
-.nav__links { display: flex; gap: clamp(1.25rem, 2.6vw, 2.75rem); list-style: none; }
+.nav__links { position: relative; display: flex; gap: clamp(1.25rem, 2.6vw, 2.75rem); list-style: none; }
 .nav__item { display: block; }
 .nav__link {
   display: inline-block;
@@ -92,3 +92,36 @@
 }
 .nav-overlay ul { list-style: none; }
 .nav-overlay a { display: block; font-size: clamp(2.75rem, 13vw, 6rem); }
+
+/* ---------- Where we are ----------
+   The moon from the section labels sits under the active link and glides to
+   any link you hover, like a moon changing orbit. Positioned by Nav.tsx. */
+.nav__orbit-dot {
+  position: absolute;
+  left: 0;
+  bottom: -0.35rem;
+  width: 5px;
+  height: 5px;
+  margin-left: -2.5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #7a7a7a 0%, #2a2a2a 45%, #0a0a0a 100%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+:root[data-nav-theme="dark"] .nav__orbit-dot,
+:root:has(.nav-overlay[data-open="true"]) .nav__orbit-dot {
+  background: radial-gradient(circle at 34% 30%, #ffffff 0%, #d0d0d0 40%, #6a6a6a 100%);
+  box-shadow: 0 0 8px rgba(250, 250, 250, 0.55);
+}
+
+/* Mobile menu: the active page carries the moon before its name. */
+.nav-overlay a[aria-current] .line-inner { display: inline-flex; align-items: center; gap: 0.35em; }
+.nav-overlay a[aria-current] .line-inner::before {
+  content: '';
+  width: 0.2em;
+  height: 0.2em;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #ffffff 0%, #d0d0d0 40%, #6a6a6a 100%);
+  box-shadow: 0 0 12px rgba(250, 250, 250, 0.5);
+}

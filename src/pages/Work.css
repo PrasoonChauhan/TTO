@@ -1,0 +1,41 @@
+/* ==========================================================================
+   /work/ - every success story, same design as the home section.
+   ========================================================================== */
+.work-hero {
+  padding: calc(var(--nav-h) + clamp(3rem, 10vh, 6rem)) var(--gutter) clamp(3rem, 8vh, 5rem);
+  background: var(--lunar-white);
+  color: var(--obsidian);
+}
+.work-hero__eyebrow { color: color-mix(in srgb, var(--obsidian) 58%, transparent); }
+.work-hero__title { margin-top: 1.5rem; font-size: clamp(3rem, 8vw, 11rem); }
+.work-hero__foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: clamp(2rem, 5vh, 3rem);
+  padding-top: 1.25rem;
+  border-top: 1px solid color-mix(in srgb, var(--obsidian) 16%, transparent);
+}
+.work-hero__sub {
+  max-width: 38ch;
+  font-size: var(--fs-lead);
+  font-weight: 450;
+  line-height: 1.32;
+  letter-spacing: -0.012em;
+  color: color-mix(in srgb, var(--obsidian) 62%, transparent);
+}
+.work-hero__count { white-space: nowrap; }
+.work-hero__edit {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px dashed currentColor;
+  border-radius: 3px;
+}
+/* The list follows straight on from the hero. */
+.stories--page { padding-top: clamp(2rem, 6vh, 4rem); }
+
+@media (max-width: 900px) {
+  .work-hero__foot { flex-direction: column; align-items: flex-start; }
+}

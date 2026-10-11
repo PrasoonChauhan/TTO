@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from 
 import { gsap, ScrollTrigger, useGSAP, EASE } from '../../lib/gsap'
 import { getLenis } from '../../lib/smoothScroll'
 import { navigate } from '../../lib/navigate'
+import { useActiveLink } from '../../hooks/useActiveLink'
 import { MagneticButton } from '../ui/MagneticButton'
 import { nav } from '../../content/copy'
 import './Nav.css'
@@ -74,6 +75,49 @@ export function Nav() {
     }
   }, [])
 
+  /* ---------- Where we are: the moon dot under the active link ---------- */
+  const active = useActiveLink()
+  const dot = useRef<HTMLSpanElement>(null)
+  useEffect(() => {
+    const list = linksRef.current
+    const d = dot.current
+    if (!list || !d) return
+    const links = Array.from(list.querySelectorAll<HTMLAnchorElement>('.nav__link'))
+    const current = () => links.find((l) => l.getAttribute('href') === active) ?? null
+    // Glide the dot under a link (or fade it out when nothing is active).
+    const moveTo = (link: HTMLElement | null, instant = false) => {
+      const dur = instant ? 0 : 0.7
+      if (!link) {
+        gsap.to(d, { autoAlpha: 0, scale: 0, duration: instant ? 0 : 0.4, ease: EASE.move, overwrite: 'auto' })
+        return
+      }
+      // Measure against the list: each link sits in its own (transformed) wrapper.
+      const lr = link.getBoundingClientRect()
+      const x = lr.left - list.getBoundingClientRect().left + lr.width / 2
+      const visible = Number(gsap.getProperty(d, 'opacity')) > 0.05
+      if (!visible) gsap.set(d, { x })
+      gsap.to(d, { x, autoAlpha: 1, scale: 1, duration: dur, ease: 'power3.inOut', overwrite: 'auto' })
+    }
+    moveTo(current(), true)
+    let hovered: HTMLElement | null = null
+    const onEnter = (e: Event) => moveTo((hovered = e.currentTarget as HTMLElement))
+    const onLeave = () => {
+      hovered = null
+      moveTo(current())
+    }
+    // Re-measure on resize, keeping the dot under a hovered link if there is one.
+    const onResize = () => moveTo(hovered ?? current(), true)
+    links.forEach((l) => l.addEventListener('mouseenter', onEnter))
+    list.addEventListener('mouseleave', onLeave)
+    window.addEventListener('resize', onResize)
+    document.fonts?.ready.then(onResize)
+    return () => {
+      links.forEach((l) => l.removeEventListener('mouseenter', onEnter))
+      list.removeEventListener('mouseleave', onLeave)
+      window.removeEventListener('resize', onResize)
+    }
+  }, [active])
+
   // Mobile overlay.
   const wasOpen = useRef(false)
   useEffect(() => {
@@ -117,17 +161,23 @@ export function Nav() {
           <ul className="nav__links" ref={linksRef}>
             {nav.links.map((l) => (
               <li key={l.href} className="nav__item">
-                <a className="nav__link" href={l.href} onClick={go(l.href)}>
+                <a
+                  className={`nav__link${active === l.href ? ' is-active' : ''}`}
+                  href={l.href}
+                  onClick={go(l.href)}
+                  aria-current={active === l.href ? (l.href.includes('#') ? 'location' : 'page') : undefined}
+                >
                   {l.label}
                 </a>
               </li>
             ))}
+            <span className="nav__orbit-dot" ref={dot} aria-hidden="true" />
           </ul>
         </nav>
 
         <div className="nav__right">
           <div className="nav__item nav__cta">
-            <MagneticButton href={nav.cta.href} label={nav.cta.label} onClick={go(nav.cta.href)} />
+            <MagneticButton href={nav.cta.href} label={nav.cta.label} external={nav.cta.external} />
           </div>
           <button
             className="nav__item nav__menu"
@@ -144,7 +194,14 @@ export function Nav() {
         <ul>
           {[...nav.links, nav.cta].map((l) => (
             <li key={l.href}>
-              <a href={l.href} onClick={go(l.href)} tabIndex={open ? 0 : -1} className="display">
+              <a
+                href={l.href}
+                onClick={go(l.href)}
+                tabIndex={open ? 0 : -1}
+                aria-current={active === l.href ? 'page' : undefined}
+                className="display"
+                {...('external' in l && l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              >
                 <span className="line-mask">
                   <span className="line-inner">{l.label}</span>
                 </span>

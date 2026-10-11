@@ -1,0 +1,8 @@
+# Authors for Insights articles. Reference them in an article with `author: <id>`.
+# PLACEHOLDER: replace with real people (photo: square, at least 400px, in /public/authors/).
+team:
+  name: The Third Orbit
+  role: Strategy, brand & technology team
+  photo: /logos/tto_black_monogram.png
+  bio: We partner with startups between traction and scale on strategy, brand, growth and technology. These are our field notes.
+  linkedin: https://www.linkedin.com/company/thethirdorbit

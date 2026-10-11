@@ -31,11 +31,13 @@ The hero tells this story literally: the moon completes one revolution per orbit
 - Headline lines always reveal through masks: yPercent 140 to 0, `power4.out`.
 - Hover pattern: siblings dim, the focused item stays at full strength. Grid items add 1px corner brackets that lock on.
 - Section labels: a mono index like "(02)" plus the small moon dot before the label.
+- Nav "you are here": the same moon dot sits under the active link (page, or home section via scroll) and glides to any hovered link (src/hooks/useActiveLink.ts).
 - CTAs: a solid block with an inset diagonal-arrow tile. Colours never change on hover. Hover is a synced slot-reel roll: label rolls up, arrow rolls toward its head, mouse-out reverses. No magnetic drift on buttons.
 
 ## Site rules
 
 - Every page ends with `<SiteFooter />` (src/components/SiteFooter.tsx): the "Final approach" statement (section 10) followed by the footer. Never render `<Footer />` on its own.
+- Lead form: buttons call leadFormLink(source) (src/lib/leadForm.ts); the form is mounted once per page by SiteFooter and posts to a Google Apps Script (google-apps-script/). With no endpoint or on failure it hands off to WhatsApp/email, so it never dead-ends.
 - The contact address lives only in `CONTACT_EMAIL` in src/content/copy.ts (hello@thethirdorbit.co).
 - No em or en dashes anywhere; use a hyphen.
 
@@ -48,10 +50,10 @@ The hero tells this story literally: the moon completes one revolution per orbit
 | The gap | Names what keeps founders in orbit two. Pinned on desktop: words light up with scroll while a telemetry panel (orbit diagram, readouts) tracks each beat. |
 | We close that gap | The answer, in daylight. Whole screen crossfades void to lunar-white. Headline halves slide together as a "Gap 100% to 00%" readout counts down. Ledger answers each readout from The gap, then a "Let’s talk how" CTA. Anchor: #answer. |
 | What we can help with (#services) | Six disciplines (Growth Strategy, Brand & Identity, Marketing, Sales Funnels, Technology & AI, Data & Operations). Dark. Pinned on desktop: scroll steps through them, hover or arrows jump. Left panel shows a live 1px-line animated visual per discipline (src/components/Help/HelpVisuals.tsx). |
-| Success stories (#work) | Proof. Four stories on the home page, each a self-playing slide deck in one shared 4:3 frame, with details spanning exactly the frame height (hover to play, arrows and keys to browse, plays in view on touch). Each names the gap it closed. "View all stories" links to the full list (page not built yet). Dummy data in src/components/Stories/storyData.ts. |
+| Success stories (#work on home, /work/ page) | Driven by Markdown: one file per story in content/work/ (field guide in content/work/README.md). `featured: true` + `order` puts up to 4 on home; /work/ lists all in the same design. Slides are built-in types or uploaded images. /work/?edit shows file, home status and a GitHub edit link per story. |
 | How we work (#process) | Light again (dawn crossfade from Help). Five stages: Discover, Research, Design, Deploy, Iterate. Unpinned horizontal timeline whose line fills with scroll; nodes turn into the planet dot as reached; Iterate notes it loops back to Design on KPIs. Vertical on mobile. |
 | Questions (#faq) | Light. Seven FAQs, one open at a time; each answer leads with a short verdict in the display face. Pinned aside has an "Ask your own" field that opens a pre-filled email (placeholder address in copy.ts). |
-| Insight | Our thinking, for founders in orbit two. |
+| Insights (/insights/) | Markdown-driven articles (content/insights/, guide in its README). Seven topics: the six disciplines plus Signals. Listing: newest (or `featured`) as a large lead, icon filter chips (?topic=), grid. Each article gets its own generated page with SEO tags, JSON-LD and pre-rendered text; TOC, takeaways, share, author box, related notes. Build also emits sitemap.xml and robots.txt. |
 | In their words (#reviews) | Founder reviews in the void. Dusk crossfade from Success stories. Pinned horizontal track on desktop, swipe carousel on mobile. Cards clamp to whole lines with an ellipsis; a native dialog shows the full review, founder photo and a link to their story. Supports kind: "video" cards (see src/components/Reviews/reviewData.ts). |
 | Final approach (#connect) | Pre-footer statement in the void: "Let’s take your startup into its third orbit". Saira Condensed 800 (used only here). Sticky stage in a 210vh section; lines drift left to right by different small amounts; planet horizon rises, moon crosses. "Tell us your story" CTA. |
 | Footer (#footer, every page) | Dark. Big rolling nav links, studio email + Noida, Ask AI (Claude, ChatGPT, Gemini, Grok with a pre-filled prompt, also copied to clipboard), LinkedIn + Instagram, live Noida clock, Back to top, full-width wordmark. |
