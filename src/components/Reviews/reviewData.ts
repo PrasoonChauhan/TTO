@@ -1,7 +1,6 @@
 /**
- * DUMMY CONTENT. Fictional founders and reviews for layout. Photos are
- * placeholder portraits from randomuser.me; use real photos, ideally square
- * and at least 600px, in /public/reviews.
+ * Founder reviews. Photos live in /public/reviews: square, cropped to head and
+ * shoulders, at least 480px.
  *
  * To add a video review, add an item with kind: 'video' anywhere in the list:
  *   {
@@ -31,50 +30,69 @@ export type TextReview = Base & { kind: 'text'; body: string }
 export type VideoReview = Base & { kind: 'video'; poster: string; src: string; duration: string }
 export type Review = TextReview | VideoReview
 
-/** DEMO: every placeholder founder points at the same profile. Replace per founder. */
-const DEMO_LINKEDIN = 'https://www.linkedin.com/in/princeperspect'
-
 export const reviews: Review[] = [
   {
     kind: 'text',
-    id: 'kepler',
-    founder: { name: 'Daniel Ortiz', role: 'Co-founder & CEO', company: 'Kepler Systems', photo: '/reviews/founder-1.jpg', linkedin: DEMO_LINKEDIN },
-    headline: 'For the first time, our team closes deals without me in the room.',
-    body: 'We had a great product and a sales process that lived entirely in my head. Every enterprise deal needed me on the call, and that was capping our growth.\n\nThe Third Orbit rebuilt our positioning from the ground up, gave us a sales narrative the whole team could own, and turned the website into something prospects actually forward to their buying committee. Within two quarters our pipeline had tripled and our newest account executives were closing on their own.\n\nThe biggest change is how I spend my week. I am back to building product, and the company no longer depends on my calendar to grow.',
+    id: 'outrive-trails',
+    founder: {
+      name: 'Priyanshu Raj',
+      role: 'Founder',
+      company: 'Outrive Trails',
+      photo: '/reviews/priyanshu-raj.webp',
+      linkedin: 'https://www.linkedin.com/in/priyanshuraj21/',
+    },
+    headline: 'We stopped chasing leads that were never going to book.',
+    body: 'Before The Third Orbit, a big part of our week went into following up with people who were never going to come on a trail. Every enquiry looked the same, so every one got the same attention, and the serious founders waited in the queue.\n\nThey designed a sales funnel that sorts this out before it ever reaches us. The right applicants arrive ready to talk, the rest are nurtured on their own, and our sales cycle is much shorter than it used to be. What surprised me even more was the inbound. Once they reworked our website and online presence, leads started coming in organically, from founders who already understood what Outrive is about.\n\nIf your team spends more time qualifying leads than closing them, talk to them. They fixed exactly that for us.',
   },
   {
     kind: 'text',
-    id: 'helix',
-    founder: { name: 'Mei Tanaka', role: 'Founder & Chief Science Officer', company: 'Helix Bio', photo: '/reviews/founder-2.jpg', linkedin: DEMO_LINKEDIN },
-    headline: 'Investors finally understood what we had built.',
-    body: 'Our science was strong, but we explained it like a lab report. Partners nodded politely and moved on. The team spent weeks with our scientists until they could explain the platform better than we could, then built an identity and investor story around it.\n\nWe closed our Series A three months after the relaunch.',
+    id: 'zoku-zest',
+    founder: {
+      name: 'Harsh Kapoor',
+      role: 'Head of Growth & Operations',
+      company: 'Zoku Zest',
+      photo: '/reviews/harsh-kapoor.webp',
+      linkedin: 'https://www.linkedin.com/in/harsh-kapoor-94bb47226/',
+    },
+    headline: 'They understand the buyer before they spend a single rupee on ads.',
+    body: 'Most agencies start with the ad. The Third Orbit starts with the buyer. Before any campaign went live, they spent more time understanding how our customers see anime, streetwear and price than they spent making the creative. They are honestly obsessed with that part, and it shows in the numbers.\n\nWe are getting the best ROAS we have ever had, at a cost I did not think was possible for a brand our size. The marketing feels like it was made by people who know our community, because by the time they build anything, they do.\n\nIf you are a D2C founder spending on campaigns that look good but do not sell, let them study your customer first. That is where the results come from.',
   },
   {
     kind: 'text',
-    id: 'nova',
-    founder: { name: 'Marcus Reid', role: 'CEO', company: 'Nova Pay', photo: '/reviews/founder-3.jpg', linkedin: DEMO_LINKEDIN },
-    headline: 'Our website went from a brochure to our best salesperson.',
-    body: 'Every customer we had came from a referral, which felt great until it stopped scaling. We needed buyers to find us on their own.\n\nThe Third Orbit rebuilt the website, set up a content system our small team can actually keep running, and connected it all to a clear demand engine. Organic demo requests are up more than 200 percent, and the leads that come in already understand what we do. Sales calls now start at the second conversation, not the first.\n\nWhat I valued most was the honesty. They told us early which channels would not work for a company our size, and saved us months of wasted spend.',
+    id: 'brew-lab',
+    founder: {
+      name: 'Bhavik Dhuphur',
+      role: 'COO',
+      company: 'Brew Lab',
+      photo: '/reviews/bhavik-dhuphur.webp',
+      linkedin: 'https://www.linkedin.com/in/bhavikdhuphur/',
+    },
+    headline: 'They know how to build a consumer brand, and they hold their nerve.',
+    body: 'Building a brand for consumers is its own game, and The Third Orbit understands the B2C market better than anyone we have worked with. They knew what our buyers respond to, how a brand earns a place in someone’s routine, and what it takes to get there.\n\nWhat stood out even more was their discipline. They set the plan and the KPIs they would be measured on, and then they stuck to them. No panicked changes after a slow week, no chasing every new trend. A patient team, confident in its plan, that delivered what it promised.\n\nFor any founder building a consumer brand, that mix of market sense and patience is rare. I would recommend them without hesitation.',
   },
   {
     kind: 'text',
-    id: 'quanta',
-    founder: { name: 'Priya Nair', role: 'Co-founder & COO', company: 'Quanta AI', photo: '/reviews/founder-4.jpg', linkedin: DEMO_LINKEDIN },
-    headline: 'Every board meeting now starts from clarity, not guesswork.',
-    body: 'We were growing fast and nobody could say exactly why. The Third Orbit built the metrics, the dashboards and a twelve-month roadmap that the whole leadership team signed up to. We now know what moves the number, and so does our board.',
+    id: 'shyphan-ai',
+    founder: {
+      name: 'Sahil Rai',
+      role: 'Growth Head',
+      company: 'Shyphan Ai Solutions',
+      photo: '/reviews/sahil-rai.webp',
+      linkedin: 'https://www.linkedin.com/in/sahilraiii/',
+    },
+    headline: 'For the first time, we knew exactly what the quarter was for.',
+    body: 'What I value most about The Third Orbit is how they plan. Every month and every quarter comes with a detailed plan, clear KPIs, and a decision already made about what we change if something does not work.\n\nFor the first time, the whole team knew what we were doing this quarter, what we expected from it, and what the next move would be if a number fell short. Everything is mapped out. No guesswork, and no trying everything at once to see what sticks.\n\nIf you are leading growth and tired of reacting week to week, this is the team that gets you thinking a quarter ahead.',
   },
   {
     kind: 'text',
-    id: 'arcfield',
-    founder: { name: 'Tom Becker', role: 'Founder', company: 'Arcfield', photo: '/reviews/founder-5.jpg', linkedin: DEMO_LINKEDIN },
-    headline: 'Calm, senior and fast.',
-    body: 'They understood the business in a week and never once needed hand-holding.',
-  },
-  {
-    kind: 'text',
-    id: 'lumen',
-    founder: { name: 'Sara Lindqvist', role: 'CEO', company: 'Lumen', photo: '/reviews/founder-6.jpg', linkedin: DEMO_LINKEDIN },
-    headline: 'They treated our company like it was their own.',
-    body: 'I have worked with agencies before, and the pattern was always the same: a beautiful pitch, a junior team, and a deliverable that never quite fit how we actually sell. This was different from the first workshop.\n\nThe Third Orbit asked uncomfortable questions about our pricing, our ideal customer and the deals we kept losing. The answers reshaped the brand, the website and how our sales team tells the story. They challenged us when we were wrong and backed us when we were right.\n\nSix months later we have a brand our team is proud of, a website that converts, and a much clearer view of where the next stage of growth comes from. If you are a founder stuck between traction and scale, talk to them.',
+    id: 'mithila-shri',
+    founder: {
+      name: 'DD Tiwari',
+      role: 'Founder',
+      company: 'Mithila Shri',
+      photo: '/reviews/dd-tiwari.webp',
+    },
+    headline: 'Working with them gave me real peace of mind.',
+    body: 'The best thing I can say about The Third Orbit is that working with them gave me peace of mind. Once I handed over our marketing and the digital side of the business, I genuinely stopped thinking about it.\n\nThey come to me with clear plans: what to do, how to do it, and when to change course. They bring the results, the next plan and the changes without me having to ask about anything. They also tell me plainly what to do and what not to do.\n\nFor a founder running a business on the ground, that is everything. I focus on my customers and my products, and I know the rest is in good hands.',
   },
 ]

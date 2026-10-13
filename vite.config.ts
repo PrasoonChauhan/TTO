@@ -14,6 +14,8 @@ export default defineConfig({
         about: resolve(import.meta.dirname, 'about/index.html'),
         work: resolve(import.meta.dirname, 'work/index.html'),
         insights: resolve(import.meta.dirname, 'insights/index.html'),
+        // Served by the host for unknown URLs (Netlify, Vercel, GitHub Pages, Cloudflare Pages).
+        notFound: resolve(import.meta.dirname, '404.html'),
       },
     },
   },

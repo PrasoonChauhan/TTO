@@ -296,7 +296,12 @@ export function LeadForm() {
                   </span>
                 </span>
               </button>
-              <p className="lead__privacy">{copy.privacy}</p>
+              <p className="lead__privacy">
+                {copy.privacy}{' '}
+                <a href={copy.privacyLink.href} target="_blank" rel="noopener">
+                  {copy.privacyLink.label}
+                </a>
+              </p>
             </div>
           </form>
         )}

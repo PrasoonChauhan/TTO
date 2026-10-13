@@ -115,7 +115,7 @@ export function Brands() {
               {brands.label}
             </p>
             <p className="eyebrow brands__count fade-up">
-              {String(brandList.length).padStart(2, '0')} partners
+              {String(brandList.length).padStart(2, '0')} featured partners
             </p>
             <span className="brands__rule" aria-hidden="true" />
           </header>

@@ -3,6 +3,7 @@ import { gsap, useGSAP, EASE } from '../../lib/gsap'
 import { useSectionTheme } from '../../hooks/useSectionTheme'
 import { useRoll } from '../../hooks/useRoll'
 import { navigate } from '../../lib/navigate'
+import { leadFormLink } from '../../lib/leadForm'
 import { Arrow } from '../ui/Arrow'
 import { footer } from '../../content/copy'
 import { ICONS } from './brandIcons'
@@ -21,6 +22,8 @@ function BrandIcon({ name }: { name: IconKey }) {
 /** One big navigation row: label and diagonal arrow roll together on hover. */
 function FooterLink({ label, href }: { label: string; href: string }) {
   const { roll, arrows, enter, leave } = useRoll()
+  // `#start` / `#start-<source>` opens the lead form, like every other start button.
+  const lead = href.startsWith('#start') ? leadFormLink(href.replace(/^#start-?/, '') || 'start') : null
   return (
     <li className="flink">
       <a
@@ -30,7 +33,7 @@ function FooterLink({ label, href }: { label: string; href: string }) {
         onMouseLeave={leave}
         onFocus={enter}
         onBlur={leave}
-        onClick={(e) => navigate(href, e)}
+        onClick={(e) => (lead ? lead.onClick(e) : navigate(href, e))}
       >
         <span className="flink__reel" aria-hidden="true">
           <span className="flink__roll" ref={roll}>

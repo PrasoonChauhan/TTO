@@ -1,0 +1,147 @@
+/* ==========================================================================
+   404. A standalone, lightweight page: the site's fonts and tokens, no app
+   bundle. The moon circles the planet in pure CSS.
+   ========================================================================== */
+@import '@fontsource-variable/archivo/standard.css';
+@import '@fontsource-variable/geist';
+@import '@fontsource-variable/geist-mono';
+@import './tokens.css';
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; }
+
+body {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: var(--void-black);
+  color: var(--starlight);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.nf-top { padding: 1.4rem var(--gutter); }
+.nf-top img { display: block; width: auto; height: 2.4rem; }
+
+/* ---------- Layout ---------- */
+.nf {
+  position: relative;
+  display: grid;
+  align-items: center;
+  padding: 2rem var(--gutter) 3rem;
+  overflow: hidden; /* the sky bleeds off the right edge without causing sideways scroll */
+}
+.nf-copy { position: relative; z-index: 1; max-width: 46rem; }
+
+.nf-eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--starlight) 55%, transparent);
+}
+.nf-title {
+  margin-top: 1.5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-stretch: 112%;
+  font-size: clamp(2.75rem, 7vw, 7rem);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-tighter);
+}
+.nf-sub {
+  max-width: 34ch;
+  margin-top: 1.75rem;
+  font-size: var(--fs-lead);
+  line-height: 1.35;
+  color: color-mix(in srgb, var(--starlight) 60%, transparent);
+}
+
+.nf-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.75rem; margin-top: 2.5rem; }
+.nf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.2rem;
+  border-radius: var(--radius);
+  background: var(--starlight);
+  color: var(--obsidian);
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+.nf-btn:hover { transform: translateY(-2px); }
+.nf-link {
+  color: var(--starlight);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--starlight) 35%, transparent);
+  text-underline-offset: 0.3em;
+  transition: text-decoration-color 0.3s ease;
+}
+.nf-link:hover { text-decoration-color: currentColor; }
+.nf-btn:focus-visible, .nf-link:focus-visible, .nf-top a:focus-visible { outline: 1px solid var(--starlight); outline-offset: 4px; }
+
+/* ---------- Sky: planet, tilted orbits, a moon on its path ---------- */
+.nf-sky {
+  position: absolute;
+  right: calc(var(--gutter) * -1);
+  top: 50%;
+  width: min(58vw, 760px);
+  aspect-ratio: 1;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.nf-orbit {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border: 1px solid color-mix(in srgb, var(--starlight) 14%, transparent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(-16deg);
+}
+.nf-orbit--1 { width: 100%; height: 32%; }
+.nf-orbit--2 { width: 76%; height: 24%; border-color: color-mix(in srgb, var(--starlight) 9%, transparent); }
+.nf-planet {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 34%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 34% 30%, #ffffff 0%, #c9c9c9 24%, #4a4a4a 68%, #141414 100%);
+  box-shadow: 0 0 90px rgba(250, 250, 250, 0.1);
+}
+/* The moon rides the outer orbit: two eased axes a quarter-turn apart trace
+   the ellipse, inside a box tilted like the orbit, so the moon stays round. */
+.nf-moon-path { position: absolute; inset: 0; transform: rotate(-16deg); }
+.nf-moon {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 50%;
+  background: var(--starlight);
+  box-shadow: 0 0 16px rgba(250, 250, 250, 0.6);
+  animation: nf-x 12s ease-in-out infinite alternate, nf-y 12s ease-in-out -6s infinite alternate;
+}
+@keyframes nf-x { from { left: 0%; } to { left: 100%; } }
+@keyframes nf-y { from { top: 34%; } to { top: 66%; } }
+@media (prefers-reduced-motion: reduce) {
+  .nf-moon { animation: none; left: 88%; top: 40%; }
+}
+
+.nf-foot {
+  padding: 1.25rem var(--gutter);
+  border-top: 1px solid color-mix(in srgb, var(--starlight) 14%, transparent);
+  font-size: 0.85rem;
+  color: color-mix(in srgb, var(--starlight) 55%, transparent);
+}
+
+/* ---------- Small screens: the sky moves behind the copy ---------- */
+@media (max-width: 760px) {
+  .nf-sky { width: 120vw; right: -45vw; top: 16%; opacity: 0.55; }
+}

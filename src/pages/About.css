@@ -132,6 +132,19 @@
 .ab-fact__v { font-size: clamp(2.2rem, 3.4vw, 4.8rem); }
 .ab-fact__l { margin-top: 0.75rem; font-size: 0.95rem; color: color-mix(in srgb, var(--obsidian) 58%, transparent); }
 
+/* Privacy: a quiet closing note, label left and text right like the facts row. */
+.ab-privacy {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gutter);
+  margin-top: clamp(4rem, 10vh, 6rem);
+  padding-top: 1.25rem;
+  border-top: 1px solid color-mix(in srgb, var(--obsidian) 18%, transparent);
+  scroll-margin-top: calc(var(--nav-h) + 2rem);
+}
+.ab-privacy__body { grid-column: 2 / -1; max-width: 62ch; font-size: 0.95rem; line-height: 1.55; color: color-mix(in srgb, var(--obsidian) 68%, transparent); }
+.ab-privacy__body p + p { margin-top: 0.9em; }
+
 /* ---------- Small screens ---------- */
 @media (max-width: 900px) {
   .ab-hero__text, .ab-sys { grid-column: 1 / -1; grid-row: auto; }
@@ -142,4 +155,6 @@
   .ab-beliefs__head, .ab-beliefs__list { grid-column: 1 / -1; }
   .ab-beliefs__list { margin-top: 2.5rem; }
   .ab-facts__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 2rem; }
+  .ab-privacy { grid-template-columns: 1fr; gap: 1rem; }
+  .ab-privacy__body { grid-column: auto; }
 }

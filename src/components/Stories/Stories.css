@@ -448,6 +448,155 @@
   opacity: 0.7;
 }
 
+.slide__title--sm { font-size: 4cqw; }
+
+/* Website: a real screenshot in the browser frame */
+.slide__web-title {
+  position: absolute;
+  left: 5cqw;
+  right: 5cqw;
+  top: 11cqw;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-stretch: 112%;
+  font-size: 3.4cqw;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.slide--web-shot .slide__browser { top: 20cqw; bottom: auto; left: 12cqw; right: 12cqw; }
+.slide__shot { display: block; width: 100%; height: auto; }
+
+/* Split: half photo, half story. The caption bar sits on the text half. */
+.slide__split-media { position: absolute; top: 0; bottom: 0; width: 50%; }
+.slide__split-media img { width: 100%; height: 100%; object-fit: cover; }
+.slide--split-right .slide__split-media { right: 0; }
+.slide--split-left .slide__split-media { left: 0; }
+.slide__split-body { position: absolute; bottom: 12cqw; width: 40cqw; }
+.slide--split-right .slide__split-body { left: 5cqw; }
+.slide--split-left .slide__split-body { left: 55cqw; }
+.slide__split-body .slide__text { font-size: 1.6cqw; }
+
+/* Gallery: title on top, images along the bottom, optional number top right */
+.slide__gallery-head { position: absolute; left: 5cqw; right: 36cqw; top: 11cqw; }
+.slide__gallery-head .slide__text { margin-top: 1.6cqw; font-size: 1.6cqw; }
+.slide__stat { position: absolute; right: 5cqw; top: 10cqw; text-align: right; }
+.slide__stat-value {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-stretch: 112%;
+  font-size: 9cqw;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  color: var(--sl-accent);
+}
+.slide__stat-label {
+  display: block;
+  margin-top: 1cqw;
+  font-family: var(--font-mono);
+  font-size: 1.2cqw;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.slide__gallery {
+  position: absolute;
+  left: 5cqw;
+  width: var(--w);
+  bottom: 11cqw;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  gap: 1.2cqw;
+}
+.slide__gallery img { width: 100%; aspect-ratio: var(--ratio); object-fit: cover; border-radius: 0.6cqw; }
+
+/* Flow: numbered steps on one line */
+.slide__flow-head { position: absolute; left: 5cqw; right: 16cqw; top: 11cqw; }
+.slide__flow {
+  position: absolute;
+  left: 5cqw;
+  right: 5cqw;
+  bottom: 19cqw;
+  display: grid;
+  grid-template-columns: repeat(var(--n), 1fr);
+  list-style: none;
+}
+.slide__flow li { position: relative; display: grid; align-content: start; gap: 1.8cqw; padding-right: 2cqw; }
+/* The line runs through the centre of every dot and stops at the last one. */
+.slide__flow li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(1.2cqw + 1.8cqw + 1cqw);
+  height: 1px;
+  background: color-mix(in srgb, var(--sl-ink) 30%, transparent);
+}
+.slide__flow li:last-child::before { right: auto; width: 2cqw; }
+.slide__flow-n { font-family: var(--font-mono); font-size: 1.2cqw; line-height: 1; letter-spacing: 0.06em; opacity: 0.6; }
+.slide__flow-dot {
+  position: relative;
+  width: 2cqw;
+  height: 2cqw;
+  border-radius: 50%;
+  background: var(--sl-bg);
+  box-shadow: inset 0 0 0 1px var(--sl-ink);
+}
+.slide__flow-label { font-size: 2cqw; font-weight: 500; line-height: 1.15; letter-spacing: -0.015em; }
+.slide__flow li.is-on .slide__flow-dot {
+  background: var(--sl-accent);
+  box-shadow: 0 0 0 0.8cqw color-mix(in srgb, var(--sl-accent) 25%, transparent);
+}
+.slide__flow li.is-on .slide__flow-label { color: var(--sl-accent); }
+
+/* Narrow decks (phones): every size above is relative to the deck, so small
+   text would shrink below ~6px. Here it holds at roughly 9 to 11px, and the
+   layouts give that text the room it needs. */
+@container (max-width: 600px) {
+  .slide__meta,
+  .slide__stat-label,
+  .slide__result-label { font-size: 2.6cqw; }
+  .slide__text,
+  .slide__split-body .slide__text,
+  .slide__gallery-head .slide__text { font-size: 3.1cqw; line-height: 1.35; max-width: none; }
+  .slide__title--sm { font-size: 4.4cqw; }
+
+  /* The deck's caption bar is a fixed size, so on a small deck it takes more
+     of the frame: content near the bottom lifts to stay clear of it. */
+  .slide__gap-body,
+  .slide__split-body,
+  .slide__results { bottom: 15cqw; }
+  /* Shorter photo row, so the larger text above has room. */
+  .slide__gallery { bottom: 14.5cqw; width: calc(var(--w) * 0.8); }
+  .slide__web-title { top: 9cqw; }
+  .slide--web-shot .slide__browser { top: 18cqw; left: 14cqw; right: 14cqw; }
+
+  /* Cover: services wrap onto a second line, the name moves up to clear them */
+  .slide__meta--bl { bottom: 14cqw; }
+  .slide__services { right: 5cqw; flex-wrap: wrap; row-gap: 1cqw; }
+  .slide__cover-name { bottom: 24cqw; }
+
+  .slide__gap-body { right: 5cqw; }
+  .slide__split-body { width: 42cqw; }
+  .slide__id-line { font-size: 3.4cqw; }
+  .slide__swatch span { font-size: 2cqw; }
+
+  /* Gallery: wider text column, the number keeps to the corner */
+  .slide__gallery-head { right: 27cqw; }
+  .slide__stat { max-width: 24cqw; }
+  .slide__stat-value { font-size: 7.5cqw; }
+
+  /* Flow: steps stack vertically so every label fits on one line */
+  .slide__flow-head { right: 5cqw; }
+  .slide__flow { bottom: 15cqw; grid-template-columns: none; row-gap: 1.6cqw; }
+  .slide__flow li { grid-template-columns: 5cqw 2.4cqw 1fr; align-items: center; gap: 2.4cqw; padding-right: 0; }
+  .slide__flow li::before { left: calc(5cqw + 2.4cqw + 1.2cqw); right: auto; top: 50%; width: 1px; height: calc(100% + 1.6cqw); }
+  .slide__flow li:last-child::before { display: none; }
+  .slide__flow-n { font-size: 2.6cqw; }
+  .slide__flow-dot { width: 2.4cqw; height: 2.4cqw; }
+  .slide__flow-label { font-size: 3.1cqw; }
+}
+
 /* ---------- Small screens ---------- */
 @media (max-width: 900px) {
   .stories__aside, .stories__list { grid-column: 1 / -1; }

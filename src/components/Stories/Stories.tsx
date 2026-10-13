@@ -15,7 +15,7 @@ import './Stories.css'
 type Props = {
   /** Stories to show. Home passes the featured four; /work/ passes everything. */
   items?: Work[]
-  /** 'home' adds the "View all stories" link; 'page' is the full list on /work/. */
+  /** 'home' adds the link to /work/; 'page' is the full list on /work/. */
   variant?: 'home' | 'page'
   /** Shows file name, home status and an edit link on every story (/work/?edit). */
   editMode?: boolean

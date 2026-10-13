@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactNode } from 'react'
-import { brandList } from '../Brands/logos'
+import { markFor } from '../Brands/logos'
 import { slideCaption, type Slide, type Work } from '../../content/work'
 
 /**
@@ -8,10 +8,10 @@ import { slideCaption, type Slide, type Work } from '../../content/work'
  * `image` for an uploaded slide. Order and count come from the Markdown file.
  */
 
-/** Story logo: uploaded image if given, else the placeholder mark for the brand. */
+/** Story logo: uploaded image if given, else the mark for the brand. */
 function Mark({ w }: { w: Work }): ReactNode {
   if (w.logo) return <img className="slide__logo-img" src={w.logo} alt="" />
-  return brandList.find((b) => b.name === w.brand)?.mark ?? <span className="slide__logo-text">{w.brand}</span>
+  return markFor(w.brand) ?? <span className="slide__logo-text">{w.brand}</span>
 }
 
 function Cover({ w }: { w: Work }) {
@@ -36,7 +36,6 @@ function Cover({ w }: { w: Work }) {
 function GapSlide({ w, s }: { w: Work; s: Extract<Slide, { type: 'gap' }> }) {
   return (
     <div className="slide slide--gap">
-      <span className="slide__meta slide__meta--tl">(The gap)</span>
       <span className="slide__meta slide__meta--tr">
         {w.gap.key}: <s>{w.gap.from}</s>
       </span>
@@ -51,7 +50,6 @@ function GapSlide({ w, s }: { w: Work; s: Extract<Slide, { type: 'gap' }> }) {
 function IdentitySlide({ w, s }: { w: Work; s: Extract<Slide, { type: 'identity' }> }) {
   return (
     <div className="slide slide--identity">
-      <span className="slide__meta slide__meta--tl">(Identity)</span>
       <div className="slide__id-mark">
         <Mark w={w} />
       </div>
@@ -70,18 +68,34 @@ function IdentitySlide({ w, s }: { w: Work; s: Extract<Slide, { type: 'identity'
   )
 }
 
+function Chrome({ domain }: { domain: string }) {
+  return (
+    <div className="slide__chrome">
+      <i />
+      <i />
+      <i />
+      <span className="slide__url">{domain}</span>
+    </div>
+  )
+}
+
 function WebsiteSlide({ w, s }: { w: Work; s: Extract<Slide, { type: 'website' }> }) {
   const domain = s.domain ?? `${w.brand.split(' ')[0].toLowerCase()}.com`
+  if (s.image) {
+    return (
+      <div className="slide slide--web slide--web-shot">
+        {s.title && <p className="slide__web-title">{s.title}</p>}
+        <div className="slide__browser">
+          <Chrome domain={domain} />
+          <img className="slide__shot" src={s.image} alt={s.alt ?? ''} loading="lazy" decoding="async" />
+        </div>
+      </div>
+    )
+  }
   return (
     <div className="slide slide--web">
-      <span className="slide__meta slide__meta--tl">(Website)</span>
       <div className="slide__browser">
-        <div className="slide__chrome">
-          <i />
-          <i />
-          <i />
-          <span className="slide__url">{domain}</span>
-        </div>
+        <Chrome domain={domain} />
         <div className="slide__page">
           <div className="slide__page-nav">
             <span className="slide__page-logo">
@@ -112,7 +126,6 @@ function WebsiteSlide({ w, s }: { w: Work; s: Extract<Slide, { type: 'website' }
 function ResultsSlide({ w, s }: { w: Work; s: Extract<Slide, { type: 'results' }> }) {
   return (
     <div className="slide slide--results">
-      <span className="slide__meta slide__meta--tl">(Results)</span>
       <span className="slide__meta slide__meta--tr">
         {w.gap.key}: {w.gap.from} → {w.gap.to}
       </span>
@@ -124,6 +137,70 @@ function ResultsSlide({ w, s }: { w: Work; s: Extract<Slide, { type: 'results' }
           </div>
         ))}
       </div>
+    </div>
+  )
+}
+
+function SplitSlide({ s }: { s: Extract<Slide, { type: 'split' }> }) {
+  return (
+    <div className={`slide slide--split slide--split-${s.side ?? 'right'}`}>
+      <div className="slide__split-media">
+        <img src={s.image} alt={s.alt ?? ''} loading="lazy" decoding="async" />
+      </div>
+      <div className="slide__split-body">
+        <p className="slide__title slide__title--sm">{s.title}</p>
+        {s.body && <p className="slide__text">{s.body}</p>}
+      </div>
+    </div>
+  )
+}
+
+/** Tallest a gallery image may be, in cqw. Fewer or narrower images make a shorter row, not taller images. */
+const GALLERY_MAX_H = 28
+
+function GallerySlide({ s }: { s: Extract<Slide, { type: 'gallery' }> }) {
+  const ratio = s.ratio ?? '4 / 5'
+  const [a, b = 1] = ratio.split('/').map(Number)
+  const n = s.images.length
+  const width = Math.min(90, n * GALLERY_MAX_H * (a / b) + (n - 1) * 1.2)
+  const vars = { '--cols': n, '--ratio': ratio, '--w': `${width}cqw` } as CSSProperties
+  return (
+    <div className="slide slide--gallery">
+      <div className="slide__gallery-head">
+        <p className="slide__title slide__title--sm">{s.title}</p>
+        {s.body && <p className="slide__text">{s.body}</p>}
+      </div>
+      {s.stat && (
+        <div className="slide__stat">
+          <span className="slide__stat-value">{s.stat.value}</span>
+          <span className="slide__stat-label">{s.stat.label}</span>
+        </div>
+      )}
+      <div className="slide__gallery" style={vars}>
+        {s.images.map((im) => (
+          <img key={im.src} src={im.src} alt={im.alt ?? ''} loading="lazy" decoding="async" />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function FlowSlide({ s }: { s: Extract<Slide, { type: 'flow' }> }) {
+  return (
+    <div className="slide slide--flow">
+      <div className="slide__flow-head">
+        <p className="slide__title">{s.title}</p>
+        {s.body && <p className="slide__text">{s.body}</p>}
+      </div>
+      <ol className="slide__flow" style={{ '--n': s.steps.length } as CSSProperties}>
+        {s.steps.map((t, i) => (
+          <li className={i + 1 === s.highlight ? 'is-on' : undefined} key={t}>
+            <span className="slide__flow-n">{String(i + 1).padStart(2, '0')}</span>
+            <span className="slide__flow-dot" aria-hidden="true" />
+            <span className="slide__flow-label">{t}</span>
+          </li>
+        ))}
+      </ol>
     </div>
   )
 }
@@ -150,6 +227,12 @@ function render(w: Work, s: Slide) {
       return <ResultsSlide w={w} s={s} />
     case 'image':
       return <ImageSlide s={s} />
+    case 'split':
+      return <SplitSlide s={s} />
+    case 'gallery':
+      return <GallerySlide s={s} />
+    case 'flow':
+      return <FlowSlide s={s} />
   }
 }
 

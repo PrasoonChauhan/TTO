@@ -11,14 +11,23 @@ import all from 'virtual:work'
 export type Palette = { bg: string; ink: string; accent: string; soft: string }
 export type Metric = { value: number; prefix?: string; suffix?: string; decimals?: number; label: string }
 
+export type SlideImage = { src: string; alt?: string }
+
 /** Built-in slide designs (drawn in code) plus `image` for uploaded slides. */
 export type Slide =
   | { type: 'cover'; caption?: string }
   | { type: 'gap'; caption?: string; title: string; body: string }
   | { type: 'identity'; caption?: string; line: string; colors: string[] }
-  | { type: 'website'; caption?: string; headline: string; cta: string; domain?: string }
+  /** Drawn page from `headline` and `cta`, or a real screenshot via `image` (with an optional `title` above it). */
+  | { type: 'website'; caption?: string; headline?: string; cta?: string; domain?: string; image?: string; alt?: string; title?: string }
   | { type: 'results'; caption?: string; items: { value: string; label: string }[] }
   | { type: 'image'; caption?: string; src: string; alt?: string; fit?: 'cover' | 'contain' }
+  /** Half photo, half story. */
+  | { type: 'split'; caption?: string; title: string; body?: string; image: string; alt?: string; side?: 'left' | 'right' }
+  /** A row of images under a title, with an optional headline number. */
+  | { type: 'gallery'; caption?: string; title: string; body?: string; images: SlideImage[]; ratio?: string; stat?: { value: string; label: string } }
+  /** Numbered steps on a line; `highlight` (1-based) marks the step that is ours. */
+  | { type: 'flow'; caption?: string; title: string; body?: string; steps: string[]; highlight?: number }
 
 export type Work = {
   file: string
@@ -44,6 +53,9 @@ const DEFAULT_CAPTION: Record<Slide['type'], string> = {
   website: 'Website',
   results: 'Results',
   image: 'Slide',
+  split: 'Story',
+  gallery: 'Gallery',
+  flow: 'Process',
 }
 export const slideCaption = (s: Slide) => s.caption ?? DEFAULT_CAPTION[s.type]
 

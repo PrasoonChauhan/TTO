@@ -96,8 +96,6 @@
 .rcard__open { order: 3; }
 .rcard__founder { order: 4; }
 
-.rcard__logo { display: flex; height: 1.3rem; color: var(--s-ink); }
-.rcard__logo svg { width: auto; height: 100%; max-width: 5.5rem; }
 .rcard__company { color: var(--muted); }
 .rcard__quote {
   margin-left: auto;

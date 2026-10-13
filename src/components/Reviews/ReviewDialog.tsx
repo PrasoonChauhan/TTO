@@ -1,12 +1,11 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { gsap, EASE } from '../../lib/gsap'
 import { getLenis } from '../../lib/smoothScroll'
-import { brandList } from '../Brands/logos'
+import { markFor } from '../Brands/logos'
 import { workByBrand, storyHref } from '../../content/work'
 import { Arrow } from '../ui/Arrow'
 import type { Review } from './reviewData'
 
-const markFor = (company: string) => brandList.find((b) => b.name === company)?.mark
 /** Link to the founder's story: on home if featured there, otherwise on /work/. */
 const storyAnchor = (company: string) => {
   const w = workByBrand(company)
@@ -151,7 +150,9 @@ export function ReviewDialog({ reviews, index, onIndex }: Props) {
                 </>
               )}
               <p className="rdialog__company">
-                <span className="rdialog__logo" aria-hidden="true">{markFor(review.founder.company)}</span>
+                {markFor(review.founder.company) && (
+                  <span className="rdialog__logo" aria-hidden="true">{markFor(review.founder.company)}</span>
+                )}
                 <span className="eyebrow">{review.founder.company}</span>
               </p>
               {anchor && (

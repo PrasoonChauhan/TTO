@@ -163,7 +163,8 @@ function pageHtml(a: Article, author: Author) {
   const title = `${a.seoTitle ?? a.title} | The Third Orbit Insights`
   const desc = a.seoDescription ?? a.excerpt
   const topic = TOPICS.find((t) => t.id === a.topic)!
-  const image = a.cover ? `${SITE_URL}${a.cover}` : undefined
+  // Without a cover, shares fall back to the site's share image.
+  const image = a.cover ? `${SITE_URL}${a.cover}` : `${SITE_URL}/og-image.jpg`
   const ld = [
     {
       '@context': 'https://schema.org',
@@ -196,7 +197,10 @@ ${GENERATED_MARK}
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="/logos/tto_black_monogram.png" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#F4F4F5" />
     <title>${esc(title)}</title>
     <meta name="description" content="${esc(desc)}" />
@@ -212,6 +216,7 @@ ${GENERATED_MARK}
     <meta name="twitter:card" content="${image ? 'summary_large_image' : 'summary'}" />
     <meta name="twitter:title" content="${esc(a.title)}" />
     <meta name="twitter:description" content="${esc(desc)}" />
+    <meta name="twitter:image" content="${image}" />
     <noscript><style>.article-static { opacity: 1 !important; }</style></noscript>
     <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>
   </head>

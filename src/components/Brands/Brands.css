@@ -74,7 +74,7 @@
   background: radial-gradient(circle at 34% 30%, #ffffff 0%, #d0d0d0 40%, #6a6a6a 100%);
   box-shadow: 0 0 14px rgba(250, 250, 250, 0.3);
 }
-.brands__count { color: var(--muted); }
+.brands__count { color: var(--muted); white-space: nowrap; }
 .brands__rule {
   position: absolute;
   left: 0;
@@ -142,6 +142,8 @@
   .brands__intro { position: static; }
   .brands__title { font-size: clamp(2.2rem, 9vw, 4rem); }
   .brands__main { margin-top: 3.5rem; }
+  /* Label and count stack rather than both wrapping when space runs out. */
+  .brands__head { flex-wrap: wrap; gap: 0.6rem 1.5rem; }
   .brands__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .bcell:nth-child(4n) .bcell__rule--r { display: block; }
   .bcell:nth-child(2n) .bcell__rule--r { display: none; }

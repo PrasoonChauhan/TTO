@@ -53,7 +53,12 @@ export function Reviews() {
       const fill = q('.reviews__progress-fill')[0]
       const mm = gsap.matchMedia()
       mm.add('(min-width: 901px)', () => {
-        const distance = () => Math.max(0, track.scrollWidth - track.clientWidth)
+        // Travel until the last card sits one gutter from the right edge, mirroring the left.
+        const distance = () => {
+          const last = track.lastElementChild as HTMLElement
+          const end = last.getBoundingClientRect().right - track.getBoundingClientRect().left
+          return Math.max(0, end + parseFloat(getComputedStyle(track).paddingRight) - track.clientWidth)
+        }
         gsap.to(track, {
           x: () => -distance(),
           ease: 'none',
@@ -100,7 +105,8 @@ export function Reviews() {
         track.removeEventListener('mouseleave', onLeave)
       }
     },
-    { scope: root },
+    // Rebuild when the number of reviews changes, so the pinned track never keeps a stale length.
+    { scope: root, dependencies: [reviews.length], revertOnUpdate: true },
   )
 
   return (

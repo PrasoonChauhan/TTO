@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0A0A0A" />
+    <meta name="robots" content="noindex" />
+    <title>Page not found | The Third Orbit</title>
+    <meta name="description" content="This page drifted out of orbit. Head back to The Third Orbit." />
+    <link rel="stylesheet" href="/src/styles/notfound.css" />
+  </head>
+  <body>
+    <!-- Deliberately light: no app bundle, only fonts and one stylesheet. -->
+    <header class="nf-top">
+      <a href="/" aria-label="The Third Orbit, home"><img src="/logos/tto_white_logo.png" alt="The Third Orbit" width="140" height="48" /></a>
+    </header>
+
+    <main class="nf">
+      <div class="nf-sky" aria-hidden="true">
+        <span class="nf-orbit nf-orbit--1"></span>
+        <span class="nf-orbit nf-orbit--2"></span>
+        <span class="nf-planet"></span>
+        <span class="nf-moon-path"><span class="nf-moon"></span></span>
+      </div>
+
+      <div class="nf-copy">
+        <p class="nf-eyebrow">(404) Off course</p>
+        <h1 class="nf-title">This page drifted<br />out of orbit.</h1>
+        <p class="nf-sub">The link may be old, or the page has moved. Let’s get you back on course.</p>
+        <nav class="nf-actions" aria-label="Where to next">
+          <a class="nf-btn" href="/">Back to home <span aria-hidden="true">↗</span></a>
+          <a class="nf-link" href="/work/">See our work</a>
+          <a class="nf-link" href="/insights/">Read insights</a>
+        </nav>
+      </div>
+    </main>
+
+    <footer class="nf-foot">©<span id="y">2026</span> The Third Orbit</footer>
+    <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
+  </body>
+</html>

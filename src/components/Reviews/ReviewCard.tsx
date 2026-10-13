@@ -1,10 +1,7 @@
-import { brandList } from '../Brands/logos'
 import { Arrow } from '../ui/Arrow'
 import { useRoll } from '../../hooks/useRoll'
 import type { Founder, Review } from './reviewData'
 import { ICONS } from '../Footer/brandIcons'
-
-const markFor = (company: string) => brandList.find((b) => b.name === company)?.mark
 
 /** The whole review flows on the card and is trimmed to fit; the dialog shows it in full. */
 const excerpt = (body: string) => body.replace(/\n\n/g, ' ')
@@ -71,7 +68,6 @@ export function ReviewCard({ review, index, onOpen }: Props) {
       )}
 
       <header className="rcard__top">
-        <span className="rcard__logo" aria-hidden="true">{markFor(founder.company)}</span>
         <span className="eyebrow rcard__company">{founder.company}</span>
         {!isVideo && (
           <span className="rcard__quote" aria-hidden="true">

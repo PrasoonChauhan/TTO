@@ -121,7 +121,8 @@
 .lead .mbtn { --btn-ink: var(--starlight); --btn-paper: var(--void-black); }
 .lead__submit { border: 0; cursor: pointer; }
 .lead__submit:disabled { opacity: 0.6; cursor: progress; }
-.lead__privacy { max-width: 22ch; font-size: 0.8rem; line-height: 1.4; color: var(--muted); }
+.lead__privacy { max-width: 26ch; font-size: 0.8rem; line-height: 1.4; color: var(--muted); }
+.lead__privacy a { color: inherit; text-decoration: underline; text-underline-offset: 0.2em; }
 
 /* ---------- Done / fallback ---------- */
 .lead__actions, .lead__fallbacks { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 2rem; }

@@ -30,15 +30,18 @@ To see which stories are on the home page, open `/work/?edit`. Each story shows 
 
 ## Slides
 
-Each slide has a `type`. Mix them in any order. `caption` (optional) is the label shown on the deck.
+Each slide has a `type`. Mix them in any order and use as many as the story needs. `caption` (optional) is the label shown under the deck while the slide plays, e.g. `Positioning`. Tell each client's story in its own way; `zoku-zest.md` is a worked example.
 
 | type | Fields |
 | --- | --- |
-| `image` | `src` (e.g. `/work/acme/01.jpg`), optional `alt`, `fit: contain` for diagrams or screenshots that must not be cropped |
 | `cover` | none; uses brand, sector, services and logo |
 | `gap` | `title`, `body` |
+| `split` | `title`, optional `body`, `image`, optional `alt`, `side: left` to put the photo on the left (default right) |
+| `gallery` | `title`, optional `body`, `images` (list of `src` and optional `alt`, 2 to 5 work best), optional `ratio` of each image (default `4 / 5`), optional `stat` (`value`, `label`) shown large at the top right |
+| `website` | a real screenshot: `image`, optional `alt`, `title`, `domain`. Or a drawn page: `headline`, `cta`, optional `domain` |
+| `flow` | `title`, optional `body`, `steps` (list of short labels), optional `highlight` (step number to mark, 1 = first) |
 | `identity` | `line`, `colors` (list of hex) |
-| `website` | `headline`, `cta`, optional `domain` |
 | `results` | `items`: list of `value` and `label` |
+| `image` | a full-slide picture: `src`, optional `alt`, `fit: contain` for diagrams or screenshots that must not be cropped |
 
-**Uploading slide images:** put them in `public/work/<story-name>/` and reference them as `/work/<story-name>/<file>`. Export slides at **1600 × 1200 (4:3)**, JPG or WebP, under ~300 KB each.
+**Uploading slide images:** put them in `public/work/<story-name>/` and reference them as `/work/<story-name>/<file>`. Full-slide `image` slides: export at **1600 × 1200 (4:3)**. Photos for `split`, `gallery` and `website`: any size, at least 800 px on the long side, cropped close to the ratio they are shown at. JPG or WebP, under ~300 KB each.

@@ -196,6 +196,14 @@ function Facts() {
           </div>
         ))}
       </dl>
+      <div className="ab-privacy fade-up" id="privacy">
+        <Label index={about.privacy.index}>{about.privacy.label}</Label>
+        <div className="ab-privacy__body">
+          {about.privacy.body.map((p) => (
+            <p key={p}>{p}</p>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }

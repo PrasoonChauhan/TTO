@@ -36,7 +36,7 @@ function WorkHero() {
       <div className="work-hero__foot">
         <p className="work-hero__sub fade-up">{h.sub}</p>
         <p className="eyebrow work-hero__count fade-up">
-          {pad(allWork.length)} stories
+          {pad(allWork.length)} featured stories
         </p>
       </div>
       {editMode && (

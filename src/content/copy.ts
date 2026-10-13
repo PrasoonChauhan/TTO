@@ -23,7 +23,7 @@ export const nav = {
     { label: 'Work', href: '/work/' },
     { label: 'Services', href: '/#services' },
     { label: 'Process', href: '/#process' },
-    { label: 'Insight', href: '/insights/' },
+    { label: 'Insights', href: '/insights/' },
   ],
   /** Opens WhatsApp with the pre-typed message, in a new tab. */
   cta: { label: 'Connect', href: whatsappHref(), external: true },
@@ -67,10 +67,10 @@ export const hero = {
 
 export const brands = {
   index: '(02)',
-  label: 'Brands we’ve helped',
+  label: 'Featured brands we’ve helped',
   title: ['Founders who', 'reached their', 'third orbit.'],
   body: 'From first raise to category leadership, these teams scaled with clarity, not just momentum.',
-  note: '(Selected partners)',
+  note: '(Featured from many more)',
 }
 
 export const gap = {
@@ -139,18 +139,18 @@ export const storiesCopy = {
   index: '(05)',
   label: 'Success stories',
   /** {n} is replaced with the number of featured stories, in words. */
-  intro: '{n} founders. {n} gaps closed.',
-  all: { label: 'View all stories', href: '/work/' },
-  /** The full list on /work/. */
+  intro: 'Many gaps closed. {n} worth telling.',
+  all: { label: 'Explore the work', href: '/work/' },
+  /** The full list on /work/: a curated few, not everything we have done. */
   page: {
-    index: '(All work)',
-    label: 'Every story',
-    intro: 'Every founder we have taken into their third orbit, and the gap we closed.',
+    index: '(Selected work)',
+    label: 'Featured stories',
+    intro: 'A few of the founders we have taken into their third orbit, and the gap we closed for each.',
   },
   pageHero: {
     eyebrow: '(Work)',
-    title: ['Every gap,', 'closed in public.'],
-    sub: 'Strategy, brand and technology work for startups ready to scale. Every story plays as a short deck; use the arrows to read at your own pace.',
+    title: ['From launch', 'to lift-off.'],
+    sub: 'A selection of our strategy, brand and technology work for startups ready to scale. Each story plays as a short deck; use the arrows to read at your own pace.',
   },
 }
 
@@ -316,7 +316,7 @@ export const footer = {
     { label: 'Process', href: '/#process' },
     { label: 'Insights', href: '/insights/' },
     { label: 'Questions', href: '/#faq' },
-    { label: 'Start a project', href: '/#connect' },
+    { label: 'Start a project', href: '#start-start' },
   ],
   email: CONTACT_EMAIL,
   location: ['Based in Noida, Uttar Pradesh, India.', 'Working with founders worldwide.'],
@@ -386,6 +386,15 @@ export const about = {
       { v: '5', l: 'Stages in every engagement' },
     ],
   },
+  /** Short privacy note. The lead form links here (/about/#privacy). */
+  privacy: {
+    index: '(04)',
+    label: 'Your privacy',
+    body: [
+      'When you fill in our form or write to us, we keep only what you share: your name, company, website, phone number and the best time to call. We use it to reply to you and to talk about working together. Nothing else.',
+      'We never sell your details or share them outside The Third Orbit. To see what we hold or have it deleted, email hello@thethirdorbit.co and we will take care of it.',
+    ],
+  },
 }
 
 export const insightsCopy = {
@@ -423,7 +432,8 @@ export const leadForm = {
   times: ['Morning, 9 am - 12 pm', 'Afternoon, 12 - 4 pm', 'Evening, 4 - 7 pm', 'Anytime'],
   submit: 'Send',
   sending: 'Sending',
-  privacy: 'We only use these details to get back to you.',
+  privacy: 'We only use these details to get back to you. Never sold or shared.',
+  privacyLink: { label: 'Privacy', href: '/about/#privacy' },
   success: {
     title: 'Signal received.',
     body: 'Thanks, {name}. We will reach out {when}. If it is urgent, message us on WhatsApp.',
