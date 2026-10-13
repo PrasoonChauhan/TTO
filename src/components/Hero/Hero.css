@@ -329,6 +329,25 @@
   .hud { grid-template-columns: 1fr auto; }
 }
 
+/* Portrait (phones, upright tablets): the CTA leaves the copy at the top and
+   sits just above the headline, so the frame reads text, planet, then
+   action and headline as one block at the bottom. It stays inside
+   .intro__top, so it still fades out with it on scroll. */
+@media (orientation: portrait) {
+  .intro { --intro-fs: clamp(2.6rem, 12.5vw, 7rem); --intro-gap: clamp(1.9rem, 4.2vh, 3rem); justify-content: flex-end; }
+  /* The top copy spans the full intro height, so the CTA's `bottom` measures
+     from the same edge the headline sits on (GSAP transforms this block). */
+  .intro__top { position: absolute; top: 0; bottom: 0; left: 0; }
+  .intro__title { font-size: var(--intro-fs); white-space: nowrap; }
+  .intro__cta {
+    position: absolute;
+    left: 0;
+    /* Two headline lines (line-height 0.88) plus the gap. */
+    bottom: calc(var(--intro-fs) * 0.88 * 2 + var(--intro-gap));
+    margin-top: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hud__cue-line::after { animation: none; }
 }
